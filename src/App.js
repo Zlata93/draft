@@ -6,13 +6,16 @@ import Layout from './components/Layout/Layout';
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
 import Main from './components/Main/Main';
+import HomePage from './pages/HomePage/HomePage';
 
 function App() {
   return (
     <div className="theme_space_default theme_size_default theme_color_project-default theme_gap_small theme_font_default">
         <Layout>
             <Header/>
-            <Main>Hi</Main>
+            <Main>
+                <HomePage/>
+            </Main>
             <Footer/>
         </Layout>
     </div>
