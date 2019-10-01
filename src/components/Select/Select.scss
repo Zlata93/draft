@@ -1,0 +1,25 @@
+@import './../../themes';
+
+.Select {
+	position: relative;
+
+	font-size: var(--font-s);
+
+	&-Name {
+		&_weight_bold {
+			font-weight: bold;
+		}
+		&_color {
+			&_secondary {
+				color: var(--secondary);
+			}
+		}
+	}
+
+	&-Arrow {
+		position: absolute;
+
+		top: 33%;
+		right: -15px;
+	}
+}

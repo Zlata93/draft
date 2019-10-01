@@ -1,0 +1,85 @@
+.theme_color_project-default {
+  // Значения фонов блоков:
+  --default: #fff;
+  --plain: #e6e6e6;
+  --accented: #ff3029;
+  --border: #ff4f49;
+  --border-ghost: #f0f2f3;
+  --border-faded: #e5e5e5;
+  --background-ghost: #f1f8ff;
+  --inverse: #4f4f4f;
+  --pale: #fafbfc;
+
+  // Значения состояний текста:
+  --primary: #000;
+  --secondary: #7f8285;
+  --secondary-text: #434445;
+  --tertiary: #8694a2;
+  --ghost: #b8bec3;
+  --faded: #c4c4c4;
+  --link-1:  #177ffd;
+  --link-2:  #1774e9;
+  --success: #19bc4d;
+
+  --editor-link: #005fba;
+  --editor-primary: #00234b;
+  --editor-comment: #9ea9b4;
+  --editor-header: #f5f5f5;
+  --editor-number: #c7c7c7;
+  --editor-main: #00234b;
+
+  --diff-reserved: #0433ff;
+  --diff-accented: #b4261a;
+  --diff-comment: #3ba93b;
+  --added-backgound: #e6ffed;
+  --deleted-background: #ffeef0;
+
+  --branch: #ff5668;
+  --purple: #6B69C7;
+
+
+  --line: #f0f2f3;
+  --line-darker: #e5e5e5;
+}
+
+.theme_font_default {
+  --font: arial, sans-serif;
+  --editor-font: 'PT Mono', sans-serif;
+}
+
+.theme_size_default {
+  // Значения размеров высоты текста (так как в задании текст в виде линий):
+  --font-xxs: 12px;
+  --font-xs: 13px;
+  --font-s: 14px;
+  --font-m: 16px;
+  --font-l: 20px;
+  --font-xl: 24px;
+
+  // Значения межстрочных интервалов:
+  --line-xs: 15px;
+  --line-s: 18px;
+  --line-m: 20px;
+  --line-l: 28px;
+}
+
+.theme_space_default {
+  --space-xxxxs: 2px;
+  --space-xxxs: 4px;
+  --space-xxs: 8px;
+  --space-xs: 10px;
+  --space-s: 12px;
+  --space-m: 16px;
+  --space-l: 20px;
+  --space-xl: 24px;
+  --space-xxl: 32px;
+  --space-xxxl: 40px;
+  --space-xxxxl: 48px;
+  --space-xxxxxl: 72px;
+
+  --space-1x: 30px;
+  --space-2x: 60px;
+  --space-3x: 90px;
+}
+
+$phone: '600px';
