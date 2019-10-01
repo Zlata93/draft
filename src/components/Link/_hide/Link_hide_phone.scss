@@ -1,0 +1,7 @@
+@import '../../../themes';
+
+.Link_hide_phone {
+	@media screen and (max-width: $phone) {
+		visibility: hidden;
+	}
+}

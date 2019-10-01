@@ -1,0 +1,30 @@
+@import '../../themes';
+
+.Footer {
+	display: flex;
+	justify-content: space-between;
+
+	box-sizing: border-box;
+	width: 100%;
+	padding: var(--space-m) var(--space-xxl) 18px;
+
+	color: var(--secondary);
+
+	font-family: var(--font);
+	font-size: var(--font-xs);
+	line-height: var(--line-s);
+
+	@media screen and (max-width: $phone) {
+		display: none;
+
+		padding: var(--space-m) var(--space-m) 18px;
+	}
+
+	&-Item {
+		display: flex;
+	}
+
+	&-Version {
+		margin-right: var(--space-xxl);
+	}
+}

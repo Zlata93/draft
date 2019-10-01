@@ -1,0 +1,9 @@
+@import '../../../themes';
+
+.Link_hide_desktop {
+	display: none;
+	@media screen and (max-width: $phone) {
+		display: flex;
+		align-items: center;
+	}
+}

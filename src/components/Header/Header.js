@@ -4,7 +4,6 @@ import { cn } from '@bem-react/classname';
 import './Header.scss';
 
 import { withSelectSizeS } from '../Select/_size/Select_size_s';
-
 import SelectPresenter from '../Select/Select';
 
 export const cnHeader = cn('Header');
