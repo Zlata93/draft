@@ -5,15 +5,13 @@ import './HomePage.scss';
 
 import SectionPresenter from '../../components/Section/Section';
 import { withSectionIndentHXxl } from '../../components/Section/_indent-h/Section_indent-h_xxl';
-import { withTableHideTouch } from '../../components/Table/_hide/Table_hide_touch';
 import Subheader from '../../components/Subheader/Subheader';
 import BranchNav from '../../components/BranchNav/BranchNav';
-import TablePresenter from '../../components/Table/Table';
+import Table from '../../components/Table/Table';
 import Tabs from '../../components/Tabs/Tabs';
 
 const cnHomePage = cn('HomePage');
 const Section = compose(withSectionIndentHXxl)(SectionPresenter);
-const Table = compose(withTableHideTouch)(TablePresenter);
 
 const tabs = [
     {
@@ -119,7 +117,10 @@ const HomePage = () => {
                 <Tabs tabs={tabs} activeTab={activeTab} handleClick={onTabClick} />
                 <div>
                     <Table
-                        hide='touch'
+                        className={activeTab === 1 ?
+                            cnHomePage('Table', { hide: 'phone '}) :
+                            cnHomePage('Table')
+                        }
                         tableData={activeTab === 1 ? fileTable : branchTable}
                         iconType={activeTab === 1 ? 'dir' : 'branch'}
                     />
