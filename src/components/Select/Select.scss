@@ -5,6 +5,8 @@
 
 	font-size: var(--font-s);
 
+	cursor: pointer;
+
 	&-Name {
 		&_weight_bold {
 			font-weight: bold;
@@ -21,5 +23,51 @@
 
 		top: 33%;
 		right: -15px;
+	}
+
+	&-Body {
+		position: absolute;
+		background: #fff;
+		box-shadow: 0 0 17px rgba(0, 0, 0, 0.16);
+		z-index: 1;
+
+		&_type {
+			&_branch {
+				top: 45px;
+			}
+			&_repo {
+				padding: 20px;
+				top: 5.5%;
+			}
+		}
+	}
+
+	&-Item {
+		cursor: pointer;
+		font-size: var(--font-s);
+
+		&_type {
+			&_branch {
+				padding: 10px;
+				border-bottom: 1px solid var(--border-faded);
+
+				&:hover, &:active, &:focus {
+					background: #4f4f4f;
+					color: #fff;
+				}
+
+				&.Select-Item_state_selected {
+					background: #4f4f4f;
+					color: #fff;
+				}
+			}
+			&_repo {
+				padding: 5px 0;
+
+				&:first-of-type {
+					padding-top: 0;
+				}
+			}
+		}
 	}
 }

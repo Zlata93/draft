@@ -5,6 +5,8 @@
 
 	padding: var(--space-s) 0 var(--space-xs);
 
+	position: relative;
+
 	&_border {
 		&_bottom {
 			border-bottom: 1px solid var(--border-faded);

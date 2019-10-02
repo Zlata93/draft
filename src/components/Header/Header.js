@@ -10,13 +10,33 @@ export const cnHeader = cn('Header');
 
 const Select = compose(withSelectSizeS)(SelectPresenter);
 
+const options = [
+    {
+        name: 'Arc',
+        id: '1'
+    },
+    {
+        name: 'My repository',
+        id: '2'
+    },
+    {
+        name: 'Devtools-team repository',
+        id: '3'
+    }
+];
+
 const Header = () => {
     return (
         <header className={cnHeader()}>
             <div className={cnHeader('Logo')}/>
-            <Select size='s'>
-                <span className={cnHeader('Select', ['Select-Name_weight_bold'])}>Repository</span> Arc
-            </Select>
+            <Select
+                size='s'
+                type='repo'
+                options={options}
+                activeOption={options[0]}
+                className={cnHeader('Select')}
+                name='Repository'
+            />
         </header>
     );
 };

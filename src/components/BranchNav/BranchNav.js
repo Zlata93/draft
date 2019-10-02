@@ -13,6 +13,33 @@ const cnBranchNav = cn('BranchNav');
 const Link = compose(withLinkColorDefault)(LinkPresenter);
 const Select = compose(withSelectSizeL)(SelectPresenter);
 
+const options = [
+    {
+        name: 'trunk',
+        id: '1'
+    },
+    {
+        name: 'users/a-aidyn00/my-feature-2',
+        id: '2'
+    },
+    {
+        name: 'users/a-aidyn00/my-feature-3',
+        id: '3'
+    },
+    {
+        name: 'users/a-aidyn00/my-feature-4',
+        id: '4'
+    },
+    {
+        name: 'users/a-aidyn00/my-feature-5',
+        id: '5'
+    },
+    {
+        name: 'users/a-aidyn00/my-feature-6',
+        id: '6'
+    }
+];
+
 const BranchNav = () => {
     return (
         <div className={cnBranchNav()}>
@@ -20,10 +47,11 @@ const BranchNav = () => {
                 <div className={cnBranchNav('Name')}>arcadia</div>
                 <Select
                     size='l'
+                    type='branch'
                     className={cnBranchNav('Select', { color: 'secondary '})}
-                >
-                    trunk
-                </Select>
+                    options={options}
+                    activeOption={options[0]}
+                />
             </div>
             <div className={cnBranchNav('Info')}>
                 Last commit&nbsp;
