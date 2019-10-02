@@ -1,0 +1,12 @@
+@import './../../themes';
+
+.Subheader {
+	width: 100%;
+	padding: var(--space-s) 0;
+
+	border-bottom: 1px solid var(--border-faded);
+
+	font-family: var(--font);
+	font-size: var(--font-s);
+	line-height: var(--line-m);
+}
