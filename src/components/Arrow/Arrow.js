@@ -4,7 +4,7 @@ import './Arrow.scss';
 
 export const cnArrow = cn('Arrow');
 
-const Arrow = ({className = ''}) => (
+const Arrow = ({className}) => (
     <i className={cnArrow({}, [className])}/>
 );
 

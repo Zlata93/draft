@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Router, Route, Switch } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { cn } from '@bem-react/classname';
 import { compose } from '@bem-react/core';
 import { createBrowserHistory } from 'history';
 import './HomePage.scss';
 
 import { fetchReposStartAsync } from '../../store/repos/repos.actions';
+import { setBranch } from '../../store/branch/branch.actions';
 
 import SectionPresenter from '../../components/Section/Section';
 import { withSectionIndentHXxl } from '../../components/Section/_indent-h/Section_indent-h_xxl';
@@ -33,8 +34,9 @@ const history = createBrowserHistory();
 
 const HomePage = () => {
     const [activeTab, setActiveTab] = useState(tabs[0].id);
-    const [branchName, setBranchName] = useState({name: 'trunk', id: '1'});
+    // const [branchName, setBranchName] = useState({name: 'trunk', id: '1'});
     const dispatch = useDispatch();
+    const branch = useSelector(state => state.branch).branch;
 
     useEffect(() => {
         dispatch(fetchReposStartAsync());
@@ -45,11 +47,11 @@ const HomePage = () => {
     };
 
     const onSelectBranch = (name) => {
-        setBranchName(name);
+        dispatch(setBranch(name));
         const path = history.location.pathname;
         const index = path.lastIndexOf('/');
         const newPath = path.slice(0, index);
-        history.replace(`${newPath}/${name.name}`)
+        history.replace(`${newPath}/${name}`)
     };
 
     return (
@@ -57,17 +59,17 @@ const HomePage = () => {
             <Section indentH='xxl' className={cnHomePage('Section')}>
                 <Router history={history}>
                     <Subheader>
-                        <Breadcrumbs branchName={branchName.name}/>
+                        <Breadcrumbs branchName={branch}/>
                     </Subheader>
                     <div>
                         <Switch>
                             <Route
                                 exact path="/"
-                                render={(props) => <Repos {...props} branchName={branchName} />}
+                                render={(props) => <Repos {...props} branchName={branch} />}
                             />
                             <Route
-                                path={`/:repo/${branchName.name}`}
-                                render={(props) => <Repo {...props} activeTab={activeTab} branchName={branchName} onTabClick={onTabClick} onSelectBranch={onSelectBranch} />}
+                                path={`/:repo/${branch}`}
+                                render={(props) => <Repo {...props} activeTab={activeTab} branchName={branch} onTabClick={onTabClick} onSelectBranch={onSelectBranch} />}
                             />
                         </Switch>
                     </div>

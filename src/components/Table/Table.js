@@ -20,7 +20,7 @@ const Arrow = compose(withArrowStateRight, withArrowColorFaded, withArrowSizeL)(
 const IconPlus = compose(withIconPlusWeightBold)(IconPlusPresenter);
 
 const Table = ({ tableData: { head, body }, className, iconType, tableType, location, branchName }) => {
-    const hasBranch = location.pathname.includes(branchName.name);
+    const hasBranch = location.pathname.includes(branchName);
     console.log(location.pathname)
     return (
         <table className={cnTable({}, [className])}>
@@ -46,7 +46,7 @@ const Table = ({ tableData: { head, body }, className, iconType, tableType, loca
                         <tr className={cnTable('Row', { type: tableType })} key={i}>
                             { name &&
                                 <td className={cnTable('Cell', { type: 'name' })}>
-                                    <Link to={`${location.pathname !== '/' ? location.pathname : ''}/${name}/${hasBranch ? '' : branchName.name}`}>
+                                    <Link to={`${location.pathname !== '/' ? location.pathname : ''}/${name}/${hasBranch ? '' : branchName}`}>
                                     <IconPlus
                                         weight='bold'
                                         type={iconType}

@@ -13,32 +13,7 @@ const cnBranchNav = cn('BranchNav');
 const Link = compose(withLinkColorDefault)(LinkPresenter);
 const Select = compose(withSelectSizeL)(SelectPresenter);
 
-const options = [
-    {
-        name: 'trunk',
-        id: '1'
-    },
-    {
-        name: 'develop',
-        id: '2'
-    },
-    {
-        name: 'my-feature-3',
-        id: '3'
-    },
-    {
-        name: 'my-feature-4',
-        id: '4'
-    },
-    {
-        name: 'my-feature-5',
-        id: '5'
-    },
-    {
-        name: 'users/a-aidyn00/my-feature-6',
-        id: '6'
-    }
-];
+const options = ['master', 'trunk', 'develop', 'my-feature-3', 'my-feature-4', 'my-feature-5', 'my-feature-6'];
 
 const BranchNav = ({ branchName, onSelect }) => {
     return (

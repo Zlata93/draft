@@ -21,8 +21,17 @@
 	&-Arrow {
 		position: absolute;
 
-		top: 33%;
+		top: 35%;
 		right: -15px;
+
+		&_type {
+			&_branch {
+				top: 45%;
+			}
+			&_repo {
+				top: 35%;
+			}
+		}
 	}
 
 	&-Body {
@@ -34,6 +43,7 @@
 		&_type {
 			&_branch {
 				top: 45px;
+				width: 320px;
 			}
 			&_repo {
 				padding: 20px;

@@ -31,21 +31,21 @@ const Select = ({ className, activeOption, options = [], name, type, onSelect })
                     { name &&
                         <span className={cnSelect('Name', {weight: 'bold'})}>{name} </span>
                     }
-                    {activeOption && activeOption.name}
+                    {activeOption}
                 </span>
                 <Arrow
-                    className={cnSelect('Arrow')}
+                    className={cnSelect('Arrow', { type: type })}
                     state={isOpen ? 'up' : 'down'}
                 />
             </div>
             { isOpen &&
                 <div className={cnSelect('Body', { type: type })}>
                     {
-                        options.length && options.map(({ name, id }) =>
+                        options.length && options.map((name, i) =>
                             <div
-                                onClick={() => handleSelect({ name, id })}
-                                key={id}
-                                className={id === activeOption.id ?
+                                onClick={() => handleSelect(name)}
+                                key={i}
+                                className={name === activeOption ?
                                     cnSelect('Item', { type: type, state: 'selected' }) :
                                     cnSelect('Item', { type: type })
                                 }

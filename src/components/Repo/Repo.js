@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import Table from '../Table/Table';
 import { cnHomePage } from '../../pages/HomePage/HomePage';
 import Tabs from '../Tabs/Tabs';
@@ -92,6 +93,8 @@ const tabs = [
 ];
 
 const Repo = ({activeTab, branchName, onTabClick, onSelectBranch }) => {
+    const branch = useSelector(state => state.branch).branch;
+
     return (
         <div>
             <BranchNav branchName={branchName} onSelect={onSelectBranch}/>

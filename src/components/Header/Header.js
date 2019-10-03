@@ -10,20 +10,7 @@ export const cnHeader = cn('Header');
 
 const Select = compose(withSelectSizeS)(SelectPresenter);
 
-const options = [
-    {
-        name: 'Arc',
-        id: '1'
-    },
-    {
-        name: 'My repository',
-        id: '2'
-    },
-    {
-        name: 'Devtools-team repository',
-        id: '3'
-    }
-];
+const options = ['Arc', 'MyRepo', 'Devtools-team'];
 
 const Header = () => {
     return (
