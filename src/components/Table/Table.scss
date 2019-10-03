@@ -25,7 +25,58 @@
 		position: relative;
 		@media screen and (max-width: $phone) {
 			display: flex;
-			flex-direction: column;
+
+			&_type {
+				&_file {
+					flex-wrap: wrap;
+
+					& .Table-Cell {
+						padding: 5px 0;
+
+						&:nth-last-child(2) {
+							padding-bottom: 15px;
+						}
+					}
+
+					& .Table-Cell_type_name {
+						order: 0;
+					}
+					& .Table-Cell_type_message {
+						order: 1;
+						width: 100%;
+					}
+					& .Table-Cell_type_commit {
+						order: 2;
+						width: auto;
+						padding-right: 20px;
+						position: relative;
+						&:after {
+							content: 'by';
+							position: absolute;
+							top: 5px;
+							right: 0;
+						}
+					}
+					& .Table-Cell_type_committer {
+						order: 3;
+						width: auto;
+						position: relative;
+						padding-left: 5px;
+						&:after {
+							content: ',';
+							position: absolute;
+						}
+					}
+					& .Table-Cell_type_updated {
+						order: 4;
+						width: auto;
+						padding-left: 7px;
+					}
+				}
+				&_branch {
+					flex-direction: column;
+				}
+			}
 		}
 
 	}
@@ -37,24 +88,35 @@
 
 		font-weight: normal;
 
-		&:nth-of-type(1) {
-			width: 16%;
-		}
-
-		&:nth-of-type(2) {
-			width: 17%;
-		}
-
-		&:nth-of-type(3) {
-			width: 31%;
-		}
-
-		&:nth-of-type(4) {
-			width: 10%;
-		}
-
-		&:nth-of-type(5) {
-			width: 15%;
+		&_type {
+			&_name {
+				width: 16%;
+				@media screen and (max-width: $phone) {
+					width: 100%;
+				}
+			}
+			&_commit {
+				width: 17%;
+			}
+			&_message {
+				width: 31%;
+			}
+			&_committer {
+				width: 10%;
+			}
+			&_updated {
+				width: 15%;
+			}
+			&_arrow {
+				display: none;
+				@media screen and (max-width: $phone) {
+					display: block;
+					position: absolute;
+					right: 1%;
+					top: 45%;
+					color: var(--faded);
+				}
+			}
 		}
 
 		&:nth-last-child(2) {
@@ -63,12 +125,6 @@
 
 		@media screen and (max-width: $phone) {
 			padding: 10px 0;
-			&:nth-of-type(1),
-			&:nth-of-type(2),
-			&:nth-of-type(3) {
-				width: 100%;
-				text-align: left;
-			}
 			&:first-of-type {
 				padding-top: 15px;
 				padding-bottom: 0;
@@ -81,23 +137,18 @@
 		&_type {
 			&_head {
 				color: var(--ghost);
+
+				&:nth-last-child(2) {
+					text-align: left;
+				}
+				&:last-child {
+					text-align: right;
+				}
 			}
 		}
 
 		&_weight_bold {
 			font-weight: bold;
-		}
-	}
-
-	&-Arrow {
-		display: none;
-
-		@media screen and (max-width: $phone) {
-			display: block;
-			position: absolute;
-			right: 1%;
-			top: 45%;
-			color: var(--faded);
 		}
 	}
 }

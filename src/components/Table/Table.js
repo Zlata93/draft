@@ -18,11 +18,12 @@ const Link = compose(withLinkColorDefault)(LinkPresenter);
 const Arrow = compose(withArrowStateRight, withArrowColorFaded, withArrowSizeL)(ArrowPresenter);
 const IconPlus = compose(withIconPlusWeightBold)(IconPlusPresenter);
 
-const Table = ({ tableData: { head, body }, className, iconType }) => {
+const Table = ({ tableData: { head, body }, className, iconType, tableType }) => {
+    console.log(tableType)
     return (
         <table className={cnTable({}, [className])}>
             <thead className={cnTable('Head')}>
-            <tr className={cnTable('Row')}>
+            <tr className={cnTable('Row',)}>
                 {
                     head.map((item, i) =>
                         <th
@@ -38,9 +39,9 @@ const Table = ({ tableData: { head, body }, className, iconType }) => {
             <tbody className={cnTable('Body')}>
                 {
                     body.map(({ name, commit, message, committer, updated }, i) =>
-                        <tr className={cnTable('Row')} key={i}>
+                        <tr className={cnTable('Row', { type: tableType })} key={i}>
                             { name &&
-                                <td className={cnTable('Cell')}>
+                                <td className={cnTable('Cell', { type: 'name' })}>
                                     <IconPlus
                                         weight='bold'
                                         type={iconType}
@@ -51,7 +52,7 @@ const Table = ({ tableData: { head, body }, className, iconType }) => {
                                 </td>
                             }
                             { commit &&
-                                <td className={cnTable('Cell')}>
+                                <td className={cnTable('Cell', { type: 'commit' })}>
                                     <Link
                                         color='default'
                                         href="#"
@@ -62,21 +63,21 @@ const Table = ({ tableData: { head, body }, className, iconType }) => {
                                 </td>
                             }
                             { message &&
-                                <td className={cnTable('Cell')}>
+                                <td className={cnTable('Cell', { type: 'message' })}>
                                     {message}
                                 </td>
                             }
                             { committer &&
-                            <td className={cnTable('Cell')}>
+                            <td className={cnTable('Cell', { type: 'committer' })}>
                                 <User>{committer}</User>
                             </td>
                             }
                             { updated &&
-                                <td className={cnTable('Cell')}>
+                                <td className={cnTable('Cell', { type: 'updated' })}>
                                     {updated}
                                 </td>
                             }
-                            <td className={cnTable('Arrow')}>
+                            <td className={cnTable('Cell', { type: 'arrow' })}>
                                 <Arrow
                                     state='right'
                                     color='faded'

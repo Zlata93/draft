@@ -118,11 +118,12 @@ const HomePage = () => {
                 <div>
                     <Table
                         className={activeTab === 1 ?
-                            cnHomePage('Table', { hide: 'phone ', type: 'file'}) :
+                            cnHomePage('Table') :
                             cnHomePage('Table')
                         }
                         tableData={activeTab === 1 ? fileTable : branchTable}
                         iconType={activeTab === 1 ? 'dir' : 'branch'}
+                        tableType={activeTab === 1 ? 'file' : 'branch'}
                     />
                 </div>
             </Section>
