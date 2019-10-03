@@ -19,19 +19,19 @@ const options = [
         id: '1'
     },
     {
-        name: 'users/a-aidyn00/my-feature-2',
+        name: 'develop',
         id: '2'
     },
     {
-        name: 'users/a-aidyn00/my-feature-3',
+        name: 'my-feature-3',
         id: '3'
     },
     {
-        name: 'users/a-aidyn00/my-feature-4',
+        name: 'my-feature-4',
         id: '4'
     },
     {
-        name: 'users/a-aidyn00/my-feature-5',
+        name: 'my-feature-5',
         id: '5'
     },
     {

@@ -24,23 +24,25 @@ const Table = ({ tableData: { head, body }, className, iconType, tableType, loca
     console.log(location.pathname)
     return (
         <table className={cnTable({}, [className])}>
+            { head &&
             <thead className={cnTable('Head')}>
-            <tr className={cnTable('Row',)}>
-                {
-                    head.map((item, i) =>
-                        <th
-                            key={i}
-                            className={cnTable('Cell', { type: 'head '})}
-                        >
-                            {item}
-                        </th>
-                    )
-                }
-            </tr>
+                <tr className={cnTable('Row',)}>
+                    {
+                        head.map((item, i) =>
+                            <th
+                                key={i}
+                                className={cnTable('Cell', { type: 'head '})}
+                            >
+                                {item}
+                            </th>
+                        )
+                    }
+                </tr>
             </thead>
+            }
             <tbody className={cnTable('Body')}>
                 {
-                    body.map(({ name, commit, message, committer, updated }, i) =>
+                    body.length !== 0 && body.map(({ name, commit, message, committer, updated }, i) =>
                         <tr className={cnTable('Row', { type: tableType })} key={i}>
                             { name &&
                                 <td className={cnTable('Cell', { type: 'name' })}>
