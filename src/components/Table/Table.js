@@ -76,12 +76,13 @@ const Table = ({ tableData: { head, body }, className, iconType }) => {
                                     {updated}
                                 </td>
                             }
-                            <Arrow
-                                state='right'
-                                color='faded'
-                                size='l'
-                                className={cnTable('Arrow')}
-                            />
+                            <td className={cnTable('Arrow')}>
+                                <Arrow
+                                    state='right'
+                                    color='faded'
+                                    size='l'
+                                />
+                            </td>
                         </tr>
                     )
                 }

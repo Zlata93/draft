@@ -118,7 +118,7 @@ const HomePage = () => {
                 <div>
                     <Table
                         className={activeTab === 1 ?
-                            cnHomePage('Table', { hide: 'phone '}) :
+                            cnHomePage('Table', { hide: 'phone ', type: 'file'}) :
                             cnHomePage('Table')
                         }
                         tableData={activeTab === 1 ? fileTable : branchTable}

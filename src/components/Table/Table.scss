@@ -57,7 +57,7 @@
 			width: 15%;
 		}
 
-		&:last-child {
+		&:nth-last-child(2) {
 			text-align: right;
 		}
 
