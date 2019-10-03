@@ -125,6 +125,10 @@
 			text-align: right;
 		}
 
+		&:first-child {
+			text-align: left;
+		}
+
 		@media screen and (max-width: $phone) {
 			padding: 10px 0;
 			&:first-of-type {
@@ -145,6 +149,9 @@
 				}
 				&:last-child {
 					text-align: right;
+				}
+				&:first-child {
+					text-align: left;
 				}
 			}
 		}

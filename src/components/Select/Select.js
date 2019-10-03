@@ -12,12 +12,16 @@ export const cnSelect = cn('Select');
 
 const Arrow = compose(composeU(withArrowStateUp, withArrowStateDown))(ArrowPresenter);
 
-const Select = ({ className, activeOption, options = [], name, type }) => {
+const Select = ({ className, activeOption, options = [], name, type, onSelect }) => {
     const [isOpen, setIsOpen] = useState(false);
 
     const toggleOpen = () => {
-        console.log('click');
         setIsOpen(isOpen => !isOpen);
+    };
+
+    const handleSelect = (option) => {
+        onSelect(option);
+        setIsOpen(false);
     };
 
     return (
@@ -39,6 +43,7 @@ const Select = ({ className, activeOption, options = [], name, type }) => {
                     {
                         options.length && options.map(({ name, id }) =>
                             <div
+                                onClick={() => handleSelect({ name, id })}
                                 key={id}
                                 className={id === activeOption.id ?
                                     cnSelect('Item', { type: type, state: 'selected' }) :

@@ -40,7 +40,7 @@ const options = [
     }
 ];
 
-const BranchNav = () => {
+const BranchNav = ({ branchName, onSelect }) => {
     return (
         <div className={cnBranchNav()}>
             <div className={cnBranchNav('Header')}>
@@ -50,7 +50,8 @@ const BranchNav = () => {
                     type='branch'
                     className={cnBranchNav('Select', { color: 'secondary '})}
                     options={options}
-                    activeOption={options[0]}
+                    activeOption={branchName}
+                    onSelect={onSelect}
                 />
             </div>
             <div className={cnBranchNav('Info')}>

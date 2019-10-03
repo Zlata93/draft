@@ -45,6 +45,10 @@
 .theme_font_default {
   --font: arial, sans-serif;
   --editor-font: 'PT Mono', sans-serif;
+
+  a {
+    text-decoration: none;
+  }
 }
 
 .theme_size_default {

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link, withRouter } from 'react-router-dom';
 import { cn } from '@bem-react/classname';
 import { compose } from '@bem-react/core';
 import './Table.scss';
@@ -14,12 +15,13 @@ import { withArrowColorFaded } from '../Arrow/_color/Arrow_color_faded';
 import { withArrowSizeL } from '../Arrow/_size/Arrow_size_l';
 
 export const cnTable = cn('Table');
-const Link = compose(withLinkColorDefault)(LinkPresenter);
+const MyLink = compose(withLinkColorDefault)(LinkPresenter);
 const Arrow = compose(withArrowStateRight, withArrowColorFaded, withArrowSizeL)(ArrowPresenter);
 const IconPlus = compose(withIconPlusWeightBold)(IconPlusPresenter);
 
-const Table = ({ tableData: { head, body }, className, iconType, tableType }) => {
-    console.log(tableType)
+const Table = ({ tableData: { head, body }, className, iconType, tableType, location, branchName }) => {
+    const hasBranch = location.pathname.includes(branchName.name);
+    console.log(location.pathname)
     return (
         <table className={cnTable({}, [className])}>
             <thead className={cnTable('Head')}>
@@ -42,6 +44,7 @@ const Table = ({ tableData: { head, body }, className, iconType, tableType }) =>
                         <tr className={cnTable('Row', { type: tableType })} key={i}>
                             { name &&
                                 <td className={cnTable('Cell', { type: 'name' })}>
+                                    <Link to={`${location.pathname !== '/' ? location.pathname : ''}/${name}/${hasBranch ? '' : branchName.name}`}>
                                     <IconPlus
                                         weight='bold'
                                         type={iconType}
@@ -49,17 +52,18 @@ const Table = ({ tableData: { head, body }, className, iconType, tableType }) =>
                                     >
                                         {name}
                                     </IconPlus>
+                                    </Link>
                                 </td>
                             }
                             { commit &&
                                 <td className={cnTable('Cell', { type: 'commit' })}>
-                                    <Link
+                                    <MyLink
                                         color='default'
                                         href="#"
                                         className={cnTable('Link')}
                                     >
                                         {commit}
-                                    </Link>
+                                    </MyLink>
                                 </td>
                             }
                             { message &&
@@ -92,4 +96,4 @@ const Table = ({ tableData: { head, body }, className, iconType, tableType }) =>
     );
 };
 
-export default Table;
+export default withRouter(Table);

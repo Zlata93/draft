@@ -1,0 +1,16 @@
+@import './../../themes';
+
+.Breadcrumbs {
+	display: flex;
+	flex-wrap: wrap;
+
+	margin: 0;
+	padding: 0;
+
+	list-style: none;
+
+	font-family: var(--font);
+	font-size: var(--font-s);
+	font-weight: 400;
+	line-height: var(--line-m);
+}
