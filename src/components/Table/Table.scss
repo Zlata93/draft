@@ -32,10 +32,6 @@
 
 					& .Table-Cell {
 						padding: 5px 0;
-
-						&:nth-last-child(2) {
-							padding-bottom: 15px;
-						}
 					}
 
 					& .Table-Cell_type_name {
@@ -72,9 +68,16 @@
 						width: auto;
 						padding-left: 7px;
 					}
+					& .Table-Cell_type_arrow {
+						top: 39%;
+					}
 				}
 				&_branch {
 					flex-direction: column;
+
+					& .Table-Cell_type_arrow {
+						top: 29%;
+					}
 				}
 			}
 		}
@@ -113,7 +116,6 @@
 					display: block;
 					position: absolute;
 					right: 1%;
-					top: 45%;
 					color: var(--faded);
 				}
 			}
@@ -129,7 +131,7 @@
 				padding-top: 15px;
 				padding-bottom: 0;
 			}
-			&:last-of-type {
+			&:nth-last-child(2) {
 				padding-bottom: 15px;
 			}
 		}

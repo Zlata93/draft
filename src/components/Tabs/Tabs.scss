@@ -8,8 +8,10 @@
 
 	font-size: var(--font-m);
 	font-weight: bold;
+	font-family: var(--font);
 	line-height: var(--line-m);
-	margin-bottom: var(--space-m);
+	padding-bottom: 10px;
+	border-bottom: 1px solid var(--border-faded);
 
 	&-Item {
 		margin-right: var(--space-xxl);
