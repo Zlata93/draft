@@ -19,8 +19,7 @@ const MyLink = compose(withLinkColorDefault)(LinkPresenter);
 const Arrow = compose(withArrowStateRight, withArrowColorFaded, withArrowSizeL)(ArrowPresenter);
 const IconPlus = compose(withIconPlusWeightBold)(IconPlusPresenter);
 
-const Table = ({ tableData: { head, body }, className, iconType, tableType, location, branchName }) => {
-    const hasBranch = location.pathname.includes(branchName);
+const Table = ({ tableData: { head, body }, className, iconType, tableType, location, match }) => {
     return (
         <table className={cnTable({}, [className])}>
             { head &&
@@ -41,25 +40,32 @@ const Table = ({ tableData: { head, body }, className, iconType, tableType, loca
             }
             <tbody className={cnTable('Body')}>
                 {
-                    body.length !== 0 && body.map(({ name, id, type, commit, message, committer, updated }) =>
-                        <tr className={cnTable('Row', { type: tableType })} key={id}>
-                            { name &&
+                    body.length !== 0 && body.map(({ name, id, type, commit, message, committer, updated }) => {
+                        let path = location.pathname;
+                        if (name && location.pathname.includes('.')) {
+                            let pathArr = path.split('/');
+                            pathArr = pathArr.slice(0, pathArr.length - 1);
+                            path = pathArr.join('/');
+                        }
+                        return (
+                            <tr className={cnTable('Row', { type: tableType })} key={id}>
+                                { name &&
                                 <td className={cnTable('Cell', { type: 'name' })}>
                                     <Link
-                                        to={`${location.pathname !== '/' ? location.pathname : ''}/${name}/${hasBranch ? '' : branchName}`}
+                                        to={`${path}/${name}`}
                                         params={{ repo: name }}
                                     >
-                                    <IconPlus
-                                        weight='bold'
-                                        type={iconType === 'dir' ? type : iconType}
-                                        className={cnTable('Icon')}
-                                    >
-                                        {name}
-                                    </IconPlus>
+                                        <IconPlus
+                                            weight='bold'
+                                            type={iconType === 'dir' ? type : iconType}
+                                            className={cnTable('Icon')}
+                                        >
+                                            {name}
+                                        </IconPlus>
                                     </Link>
                                 </td>
-                            }
-                            { commit &&
+                                }
+                                { commit &&
                                 <td className={cnTable('Cell', { type: 'commit' })}>
                                     <MyLink
                                         color='default'
@@ -69,31 +75,32 @@ const Table = ({ tableData: { head, body }, className, iconType, tableType, loca
                                         {commit}
                                     </MyLink>
                                 </td>
-                            }
-                            { message &&
+                                }
+                                { message &&
                                 <td className={cnTable('Cell', { type: 'message' })}>
                                     {message}
                                 </td>
-                            }
-                            { committer &&
-                            <td className={cnTable('Cell', { type: 'committer' })}>
-                                <User>{committer}</User>
-                            </td>
-                            }
-                            { updated &&
+                                }
+                                { committer &&
+                                <td className={cnTable('Cell', { type: 'committer' })}>
+                                    <User>{committer}</User>
+                                </td>
+                                }
+                                { updated &&
                                 <td className={cnTable('Cell', { type: 'updated' })}>
                                     {updated}
                                 </td>
-                            }
-                            <td className={cnTable('Cell', { type: 'arrow' })}>
-                                <Arrow
-                                    state='right'
-                                    color='faded'
-                                    size='l'
-                                />
-                            </td>
-                        </tr>
-                    )
+                                }
+                                <td className={cnTable('Cell', { type: 'arrow' })}>
+                                    <Arrow
+                                        state='right'
+                                        color='faded'
+                                        size='l'
+                                    />
+                                </td>
+                            </tr>
+                        );
+                    })
                 }
             </tbody>
         </table>
