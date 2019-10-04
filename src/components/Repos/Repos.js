@@ -1,29 +1,16 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
-import Table from '../Table/Table';
-import { cnHomePage } from '../../pages/HomePage/HomePage';
+import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { setRepo } from '../../store/repos/repos.actions';
 
-const Repos = ({branchName}) => {
-    const repos = useSelector(state => state.repos).repos;
-    const reposObj = {
-        head: ['Directories'],
-        body: []
-    };
-    repos.forEach((repo, i) => {
-        const obj = {};
-        obj.id = i;
-        obj.name = repo;
-        reposObj.body.push(obj);
-    });
+const Repos = () => {
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(setRepo(''));
+    }, [dispatch]);
     return (
         <div>
-            <Table
-                className={cnHomePage('Table')}
-                tableData={reposObj}
-                iconType='dir'
-                tableType='repos'
-                branchName={branchName}
-            />
+            <div style={{ padding: '20px 0'}}>Select repository</div>
         </div>
     );
 };

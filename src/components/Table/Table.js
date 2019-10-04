@@ -21,7 +21,7 @@ const IconPlus = compose(withIconPlusWeightBold)(IconPlusPresenter);
 
 const Table = ({ tableData: { head, body }, className, iconType, tableType, location, branchName }) => {
     const hasBranch = location.pathname.includes(branchName);
-    console.log(location.pathname)
+    // console.log(location.pathname)
     return (
         <table className={cnTable({}, [className])}>
             { head &&
@@ -42,14 +42,17 @@ const Table = ({ tableData: { head, body }, className, iconType, tableType, loca
             }
             <tbody className={cnTable('Body')}>
                 {
-                    body.length !== 0 && body.map(({ name, commit, message, committer, updated }, i) =>
-                        <tr className={cnTable('Row', { type: tableType })} key={i}>
+                    body.length !== 0 && body.map(({ name, id, type, commit, message, committer, updated }) =>
+                        <tr className={cnTable('Row', { type: tableType })} key={id}>
                             { name &&
                                 <td className={cnTable('Cell', { type: 'name' })}>
-                                    <Link to={`${location.pathname !== '/' ? location.pathname : ''}/${name}/${hasBranch ? '' : branchName}`}>
+                                    <Link
+                                        to={`${location.pathname !== '/' ? location.pathname : ''}/${name}/${hasBranch ? '' : branchName}`}
+                                        params={{ repo: name }}
+                                    >
                                     <IconPlus
                                         weight='bold'
-                                        type={iconType}
+                                        type={iconType === 'dir' ? type : iconType}
                                         className={cnTable('Icon')}
                                     >
                                         {name}

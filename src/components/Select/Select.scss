@@ -39,6 +39,12 @@
 		background: #fff;
 		box-shadow: 0 0 17px rgba(0, 0, 0, 0.16);
 		z-index: 1;
+		max-height: 210px;
+		overflow-y: scroll;
+
+		& a {
+			color: var(--primary);
+		}
 
 		&_type {
 			&_branch {
@@ -47,7 +53,7 @@
 			}
 			&_repo {
 				padding: 20px;
-				top: 5.5%;
+				top: 102%;
 			}
 		}
 	}

@@ -14,6 +14,11 @@ export const fetchReposFailure = (error) => ({
     payload: error
 });
 
+export const setRepo = (repo) => ({
+    type: reposTypes.SET_REPO,
+    payload: repo
+});
+
 export const fetchReposStartAsync = () => {
     return async (dispatch) => {
         dispatch(fetchReposStart());

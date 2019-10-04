@@ -1,26 +1,34 @@
 import React, { useState } from 'react';
+import { Link, withRouter } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import { compose, composeU } from '@bem-react/core';
 import { cn } from '@bem-react/classname';
 import './Select.scss'
 
+import { setRepo } from '../../store/repos/repos.actions';
+import { fetchFilesStartAsync } from '../../store/files/files.actions';
+
 import { withArrowStateDown } from '../Arrow/_state/Arrow_state_down';
 import { withArrowStateUp } from '../Arrow/_state/Arrow_state_up';
-
 import ArrowPresenter from '../Arrow/Arrow';
 
 export const cnSelect = cn('Select');
 
 const Arrow = compose(composeU(withArrowStateUp, withArrowStateDown))(ArrowPresenter);
 
-const Select = ({ className, activeOption, options = [], name, type, onSelect }) => {
+const Select = ({ className, activeOption, options = [], name, type, onSelect, history }) => {
     const [isOpen, setIsOpen] = useState(false);
+    // const branch = useSelector(state => state.branch).branch;
+    const dispatch = useDispatch();
 
     const toggleOpen = () => {
         setIsOpen(isOpen => !isOpen);
     };
 
-    const handleSelect = (option) => {
-        onSelect(option);
+    const handleSelect = (repo) => {
+        dispatch(setRepo(repo));
+        dispatch(fetchFilesStartAsync(repo, 'master'));
+        onSelect(repo);
         setIsOpen(false);
     };
 
@@ -42,16 +50,17 @@ const Select = ({ className, activeOption, options = [], name, type, onSelect })
                 <div className={cnSelect('Body', { type: type })}>
                     {
                         options.length && options.map((name, i) =>
-                            <div
-                                onClick={() => handleSelect(name)}
-                                key={i}
-                                className={name === activeOption ?
-                                    cnSelect('Item', { type: type, state: 'selected' }) :
-                                    cnSelect('Item', { type: type })
-                                }
-                            >
-                                {name}
-                            </div>
+                            <Link to={`/${name}/master`} key={i}>
+                                <div key={i}
+                                    onClick={() => handleSelect(name)}
+                                    className={name === activeOption ?
+                                        cnSelect('Item', { type: type, state: 'selected' }) :
+                                        cnSelect('Item', { type: type })
+                                    }
+                                >
+                                    {name}
+                                </div>
+                            </Link>
                         )
                     }
                 </div>
@@ -60,4 +69,4 @@ const Select = ({ className, activeOption, options = [], name, type, onSelect })
     );
 };
 
-export default Select;
+export default withRouter(Select);

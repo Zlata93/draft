@@ -24,8 +24,13 @@ export const fetchBranchesStartAsync = (repo) => {
     return async (dispatch) => {
         dispatch(fetchBranchesStart());
 
-        const response = await fetch(`api/repos/${repo}/branches`);
-        const branches = await response.json();
-        dispatch(fetchBranchesSuccess(branches));
+        try {
+            console.log(`api/repos/${repo}/branches`)
+            const response = await fetch(`api/repos/${repo}/branches`);
+            const branches = await response.json();
+            dispatch(fetchBranchesSuccess(branches));
+        } catch (e) {
+            dispatch(fetchBranchesFailure(e));
+        }
     }
 };

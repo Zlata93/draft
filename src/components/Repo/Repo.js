@@ -5,52 +5,55 @@ import { cnHomePage } from '../../pages/HomePage/HomePage';
 import Tabs from '../Tabs/Tabs';
 import BranchNav from '../BranchNav/BranchNav';
 
-const fileTable = {
+import { fetchBranchesStartAsync } from '../../store/branch/branch.actions';
+import { setRepo } from '../../store/repos/repos.actions';
+
+let fileTable = {
     type: 'files',
     head: ['Name', 'Last commit', 'Commit message', 'Committer', 'Updated'],
     body: [
-        {
-            name: 'api',
-            commit: 'd53dsv',
-            message: '[vcs] move http to arc',
-            committer: 'noxoomo',
-            updated: '4 s ago'
-        },
-        {
-            name: 'ci',
-            commit: 'c53dsv',
-            message: '[vcs] test for empty commit message',
-            committer: 'nikitxskv',
-            updated: '1 min ago'
-        },
-        {
-            name: 'contrib',
-            commit: 's53dsv',
-            message: '[vcs] change owner to g:arc',
-            committer: 'nalpp',
-            updated: '16:25'
-        },
-        {
-            name: 'http',
-            commit: 'd53dsv',
-            message: '[vcs] move http to arc',
-            committer: 'somov',
-            updated: 'Yesterday, 14:50'
-        },
-        {
-            name: 'README.md',
-            commit: 's53dsv',
-            message: '[vcs] change owner to g:arc',
-            committer: 'deshevoy',
-            updated: 'Jan 11, 12:01'
-        },
-        {
-            name: 'ya.make',
-            commit: 'd53dsv',
-            message: '[vcs] change owner to g:arc',
-            committer: 'nikitxskv',
-            updated: '16:25'
-        }
+        // {
+        //     name: 'api',
+        //     commit: 'd53dsv',
+        //     message: '[vcs] move http to arc',
+        //     committer: 'noxoomo',
+        //     updated: '4 s ago'
+        // },
+        // {
+        //     name: 'ci',
+        //     commit: 'c53dsv',
+        //     message: '[vcs] test for empty commit message',
+        //     committer: 'nikitxskv',
+        //     updated: '1 min ago'
+        // },
+        // {
+        //     name: 'contrib',
+        //     commit: 's53dsv',
+        //     message: '[vcs] change owner to g:arc',
+        //     committer: 'nalpp',
+        //     updated: '16:25'
+        // },
+        // {
+        //     name: 'http',
+        //     commit: 'd53dsv',
+        //     message: '[vcs] move http to arc',
+        //     committer: 'somov',
+        //     updated: 'Yesterday, 14:50'
+        // },
+        // {
+        //     name: 'README.md',
+        //     commit: 's53dsv',
+        //     message: '[vcs] change owner to g:arc',
+        //     committer: 'deshevoy',
+        //     updated: 'Jan 11, 12:01'
+        // },
+        // {
+        //     name: 'ya.make',
+        //     commit: 'd53dsv',
+        //     message: '[vcs] change owner to g:arc',
+        //     committer: 'nikitxskv',
+        //     updated: '16:25'
+        // }
     ]
 };
 
@@ -92,8 +95,28 @@ const tabs = [
     }
 ];
 
-const Repo = ({activeTab, branchName, onTabClick, onSelectBranch }) => {
-    const branch = useSelector(state => state.branch).branch;
+const Repo = ({activeTab, branchName, onTabClick, onSelectBranch, match }) => {
+    // const branch = useSelector(state => state.branch).branch;
+    const repo = useSelector(state => state.repos).repo;
+    const files = useSelector(state => state.files).files;
+    const dispatch = useDispatch();
+
+    console.log(111, files);
+
+    useEffect(() => {
+        console.log(files);
+        files.forEach(file => {
+            if (file.name.toLowerCase().includes('readme')) {
+                file.type = 'text';
+            }
+            fileTable.body.push(file);
+        })
+    }, [files]);
+
+    useEffect(() => {
+        dispatch(setRepo(match.params.repo));
+        dispatch(fetchBranchesStartAsync(repo))
+    }, [repo, dispatch, match.params.repo]);
 
     return (
         <div>
