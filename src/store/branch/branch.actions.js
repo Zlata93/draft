@@ -14,10 +14,11 @@ export const fetchBranchesFailure = (error) => ({
     payload: error
 });
 
-export const setBranch = (branch) => ({
+export const setBranch = (branch) => {
+    return {
     type: branchTypes.SET_BRANCH,
     payload: branch
-});
+}};
 
 
 export const fetchBranchesStartAsync = (repo) => {
@@ -25,10 +26,14 @@ export const fetchBranchesStartAsync = (repo) => {
         dispatch(fetchBranchesStart());
 
         try {
-            console.log(`api/repos/${repo}/branches`)
-            const response = await fetch(`api/repos/${repo}/branches`);
+            const response = await fetch(`http://localhost:5000/api/repos/${repo}/branches`);
             const branches = await response.json();
-            dispatch(fetchBranchesSuccess(branches));
+            if (branches.output) {
+                const branchArr = branches.output.filter(branch => branch);
+                dispatch(fetchBranchesSuccess(branchArr));
+            } else {
+                fetchBranchesFailure(branches.error)
+            }
         } catch (e) {
             dispatch(fetchBranchesFailure(e));
         }

@@ -21,7 +21,6 @@ const IconPlus = compose(withIconPlusWeightBold)(IconPlusPresenter);
 
 const Table = ({ tableData: { head, body }, className, iconType, tableType, location, branchName }) => {
     const hasBranch = location.pathname.includes(branchName);
-    // console.log(location.pathname)
     return (
         <table className={cnTable({}, [className])}>
             { head &&

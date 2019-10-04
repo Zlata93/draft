@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { cn } from '@bem-react/classname';
 import { compose } from '@bem-react/core';
 import './BranchNav.scss';
@@ -13,9 +14,9 @@ const cnBranchNav = cn('BranchNav');
 const Link = compose(withLinkColorDefault)(LinkPresenter);
 const Select = compose(withSelectSizeL)(SelectPresenter);
 
-const options = ['master', 'trunk', 'develop', 'my-feature-3', 'my-feature-4', 'my-feature-5', 'my-feature-6'];
-
 const BranchNav = ({ branchName, onSelect }) => {
+    const branches = useSelector(state => state.branch).branches.map(branch => branch.name);
+
     return (
         <div className={cnBranchNav()}>
             <div className={cnBranchNav('Header')}>
@@ -24,7 +25,7 @@ const BranchNav = ({ branchName, onSelect }) => {
                     size='l'
                     type='branch'
                     className={cnBranchNav('Select', { color: 'secondary '})}
-                    options={options}
+                    options={branches}
                     activeOption={branchName}
                     onSelect={onSelect}
                 />

@@ -5,6 +5,7 @@ import { cn } from '@bem-react/classname';
 import './Header.scss';
 
 import { setRepo } from '../../store/repos/repos.actions';
+import { setBranch } from '../../store/branch/branch.actions';
 
 import { withSelectSizeS } from '../Select/_size/Select_size_s';
 import SelectPresenter from '../Select/Select';
@@ -19,7 +20,8 @@ const Header = () => {
     const options = useSelector(state => state.repos).repos;
 
     const onSelect = (repo) => {
-        dispatch(setRepo(repo))
+        dispatch(setRepo(repo));
+        dispatch(setBranch('master'));
     };
 
     return (

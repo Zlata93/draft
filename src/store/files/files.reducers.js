@@ -11,9 +11,9 @@ const filesReducer = (state = initialState, { type, payload }) => {
         case filesTypes.FETCH_FILES_START:
             return { ...state, isFetching: true };
         case filesTypes.FETCH_FILES_SUCCESS:
-            return { ...state, isFetching: false, files: payload ? payload.output : [] };
+            return { ...state, isFetching: false, files: payload, error: null };
         case filesTypes.FETCH_FILES_FAILURE:
-            return { ...state, isFetching: false, error: payload };
+            return { ...state, isFetching: false, error: payload, files: [] };
         default:
             return { ...state };
     }

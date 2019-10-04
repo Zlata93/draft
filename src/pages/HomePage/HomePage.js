@@ -3,7 +3,7 @@ import { Route, Switch } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { cn } from '@bem-react/classname';
 import { compose } from '@bem-react/core';
-import { createBrowserHistory } from 'history';
+// import { createBrowserHistory } from 'history';
 import './HomePage.scss';
 
 import { fetchReposStartAsync } from '../../store/repos/repos.actions';
@@ -30,7 +30,7 @@ const tabs = [
     }
 ];
 
-const history = createBrowserHistory();
+// const history = createBrowserHistory();
 
 const HomePage = () => {
     const [activeTab, setActiveTab] = useState(tabs[0].id);
@@ -49,10 +49,10 @@ const HomePage = () => {
 
     const onSelectBranch = (name) => {
         dispatch(setBranch(name));
-        const path = history.location.pathname;
-        const index = path.lastIndexOf('/');
-        const newPath = path.slice(0, index);
-        history.replace(`${newPath}/${name}`)
+        // const path = history.location.pathname;
+        // const index = path.lastIndexOf('/');
+        // const newPath = path.slice(0, index);
+        // history.replace(`${newPath}/${name}`)
     };
 
     return (
