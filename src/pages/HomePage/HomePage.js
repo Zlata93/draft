@@ -3,6 +3,7 @@ import { Route, Switch, withRouter } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { cn } from '@bem-react/classname';
 import { compose } from '@bem-react/core';
+import getPathFromLocation from '../../utils/getPathFromLocation';
 // import { createBrowserHistory } from 'history';
 import './HomePage.scss';
 
@@ -51,14 +52,7 @@ const HomePage = ({ location }) => {
     };
 
     // console.log(location.pathname);
-    let path = location.pathname;
-    if (path.includes('.')) {
-        let pathArr = path.split('/');
-        pathArr = pathArr.slice(0, pathArr.length - 1);
-        path = pathArr.join('/');
-        // console.log(12, path)
-        // console.log(12, pathArr)
-    }
+    let path = getPathFromLocation(location.pathname);
 
     return (
         <div className={cnHomePage()}>

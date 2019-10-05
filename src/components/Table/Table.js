@@ -2,6 +2,7 @@ import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { cn } from '@bem-react/classname';
 import { compose } from '@bem-react/core';
+import getPathFromLocation from '../../utils/getPathFromLocation';
 import './Table.scss';
 
 import User from '../User/User';
@@ -41,12 +42,8 @@ const Table = ({ tableData: { head, body }, className, iconType, tableType, loca
             <tbody className={cnTable('Body')}>
                 {
                     body.length !== 0 && body.map(({ name, id, type, commit, message, committer, updated }) => {
-                        let path = location.pathname;
-                        if (name && location.pathname.includes('.')) {
-                            let pathArr = path.split('/');
-                            pathArr = pathArr.slice(0, pathArr.length - 1);
-                            path = pathArr.join('/');
-                        }
+                        let path = getPathFromLocation(location.pathname);
+
                         return (
                             <tr className={cnTable('Row', { type: tableType })} key={id}>
                                 { name &&
