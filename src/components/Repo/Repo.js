@@ -1,9 +1,17 @@
 import React, { useEffect } from 'react';
+import { compose } from '@bem-react/core';
 import { useDispatch, useSelector } from 'react-redux';
-import Table from '../Table/Table';
-import { cnHomePage } from '../../pages/HomePage/HomePage';
+
 import Tabs from '../Tabs/Tabs';
+import Table from '../Table/Table';
 import BranchNav from '../BranchNav/BranchNav';
+import SectionPresenter from '../Section/Section';
+import EditorPresenter from '../Editor/Editor';
+import { cnHomePage } from '../../pages/HomePage/HomePage';
+import { withSectionIndentHXxl } from '../Section/_indent-h/Section_indent-h_xxl';
+import { withEditorBorderFaded } from '../Editor/_border/Editor_border_faded';
+import { withSectionIndentHXxl0 } from '../Section/_indent-h/Section_indent-h_xxl0';
+import { withSectionIndentVM } from '../Section/_indent-v/Section_indent-v_m';
 
 import { fetchBranchesStartAsync } from '../../store/branch/branch.actions';
 import { fetchFilesStartAsync } from '../../store/files/files.actions';
@@ -32,6 +40,12 @@ const tabs2 = [
     //     name: 'history'
     // }
 ];
+
+const Section = compose(withSectionIndentHXxl)(SectionPresenter);
+const SectionEditor = compose(withSectionIndentHXxl0, withSectionIndentVM)(SectionPresenter);
+const Editor = compose(withEditorBorderFaded)(EditorPresenter);
+
+// Section_indent-t_m Section_indent-b_m Editor Editor_border_faded Editor_indent-h_xxl
 
 const Repo = ({activeTab, branchName, onTabClick, onSelectBranch, match, location }) => {
     const branches = useSelector(state => state.branch).branches;
@@ -64,19 +78,31 @@ const Repo = ({activeTab, branchName, onTabClick, onSelectBranch, match, locatio
 
     if (location.pathname.includes('.')) {
         return (
-            <div>
-                <BranchNav branchName={branchName} onSelect={onSelectBranch}/>
-                <Tabs tabs={tabs2} activeTab={activeTab} handleClick={onTabClick}/>
+            <>
+                <Section indentH='xxl'>
+                    <BranchNav branchName={branchName} onSelect={onSelectBranch}/>
+                    <Tabs tabs={tabs2} activeTab={activeTab} handleClick={onTabClick}/>
+                </Section>
+                <SectionEditor indentH='xxl0' indentV='m'>
+                    <Editor
+                        border='faded'
+                        headerColor='default'
+                        headerIndentH='m'
+                        headerIndentV='s'
+                        fileName=''
+                        code={file}
+                    />
+                </SectionEditor>
                 {/*<p dangerouslySetInnerHTML={{__html: file }}/>*/}
-                <p>
-                    <pre>{file}</pre>
-                </p>
-            </div>
+                {/*<p>*/}
+                {/*    <pre>{file}</pre>*/}
+                {/*</p>*/}
+            </>
         );
     }
 
     return (
-        <div>
+        <Section indentH='xxl'>
             <BranchNav branchName={branchName} onSelect={onSelectBranch}/>
             <Tabs tabs={tabs} activeTab={activeTab} handleClick={onTabClick}/>
             <Table
@@ -85,7 +111,7 @@ const Repo = ({activeTab, branchName, onTabClick, onSelectBranch, match, locatio
                 iconType={activeTab === 1 ? 'dir' : 'branch'}
                 tableType={activeTab === 1 ? 'file' : 'branch'}
             />
-        </div>
+        </Section>
     );
 };
 

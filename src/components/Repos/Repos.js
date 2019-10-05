@@ -1,6 +1,11 @@
 import React, { useEffect } from 'react';
+import { compose } from '@bem-react/core';
 import { useDispatch } from 'react-redux';
 import { setRepo } from '../../store/repos/repos.actions';
+import { withSectionIndentHXxl } from '../Section/_indent-h/Section_indent-h_xxl';
+import SectionPresenter from '../Section/Section';
+
+const Section = compose(withSectionIndentHXxl)(SectionPresenter);
 
 const Repos = () => {
     const dispatch = useDispatch();
@@ -9,9 +14,9 @@ const Repos = () => {
         dispatch(setRepo(''));
     }, [dispatch]);
     return (
-        <div>
+        <Section indentH='xxl'>
             <div style={{ padding: '20px 0'}}>Select repository</div>
-        </div>
+        </Section>
     );
 };
 

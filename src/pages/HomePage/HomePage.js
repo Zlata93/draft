@@ -60,24 +60,24 @@ const HomePage = ({ location }) => {
                 <Subheader>
                     <Breadcrumbs branchName={branch}/>
                 </Subheader>
-                <div>
-                    <Switch>
-                        <Route
-                            exact path="/"
-                            render={(props) => <Repos {...props} />}
-                        />
-                        <Route
-                            path={`/:repo/:branch`}
-                            render={(props) => <Repo {...props} activeTab={activeTab} onTabClick={onTabClick} onSelectBranch={onSelectBranch} />}
-                        />
-                        <Route
-                            path={`${path}/:id`}
-                            render={(props) =>
-                                <Repo {...props} activeTab={1} />}
-                        />
-                    </Switch>
-                </div>
             </Section>
+            <div>
+                <Switch>
+                    <Route
+                        exact path="/"
+                        render={(props) => <Repos {...props} />}
+                    />
+                    <Route
+                        path={`/:repo/:branch`}
+                        render={(props) => <Repo {...props} activeTab={activeTab} onTabClick={onTabClick} onSelectBranch={onSelectBranch} />}
+                    />
+                    <Route
+                        path={`${path}/:id`}
+                        render={(props) =>
+                            <Repo {...props} activeTab={1} />}
+                    />
+                </Switch>
+            </div>
         </div>
     );
 };
