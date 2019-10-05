@@ -6,6 +6,7 @@ import './Header.scss';
 
 import { setRepo } from '../../store/repos/repos.actions';
 import { setBranch } from '../../store/branch/branch.actions';
+import { fetchCommitsStartAsync } from '../../store/commits/commits.actions';
 
 import { withSelectSizeS } from '../Select/_size/Select_size_s';
 import SelectPresenter from '../Select/Select';
@@ -17,11 +18,13 @@ const Select = compose(withSelectSizeS)(SelectPresenter);
 const Header = () => {
     const dispatch = useDispatch();
     const repo = useSelector(state => state.repos).repo;
+    const branch = useSelector(state => state.branch).branch;
     const options = useSelector(state => state.repos).repos;
 
     const onSelect = (repo) => {
         dispatch(setRepo(repo));
         dispatch(setBranch('master'));
+        dispatch(fetchCommitsStartAsync(repo, branch));
     };
 
     return (

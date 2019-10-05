@@ -25,15 +25,10 @@ const Editor = ({ className, headerColor, headerIndentH, headerIndentV, fileName
                 </div>
             </div>
             <pre className={cnEditor('Body')}>
-                {/*<pre>*/}
-                    {code}
-                {/*</pre>*/}
+                {code}
             </pre>
         </div>
     );
 };
-// <div className="Editor-Header Editor-Header_color_default Editor-Header_space-h_m Editor-Header_space-v_s">
-// Editor Editor_border_faded Editor_indent-h_xxl
-// <table className="Editor-Body Editor-Body_color_main">
 
 export default Editor;

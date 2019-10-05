@@ -14,14 +14,24 @@ const cnBranchNav = cn('BranchNav');
 const Link = compose(withLinkColorDefault)(LinkPresenter);
 const Select = compose(withSelectSizeL)(SelectPresenter);
 
-const BranchNav = ({ onSelect }) => {
+const BranchNav = ({ onSelect, lastCommit }) => {
     const branches = useSelector(state => state.branch).branches.map(branch => branch.name);
     const branch = useSelector(state => state.branch).branch;
+    const repo = useSelector(state => state.repos).repo;
+    let commitHash, date, time, committer = '';
+
+    if (lastCommit) {
+        const lastCommitArr = lastCommit.split(' ');
+        commitHash = lastCommitArr[0].slice(0, 7);
+        date = lastCommitArr[1].replace('-', ' ');
+        time = lastCommitArr[2];
+        committer = lastCommitArr.slice(3).join(' ');
+    }
 
     return (
         <div className={cnBranchNav()}>
             <div className={cnBranchNav('Header')}>
-                <div className={cnBranchNav('Name')}>arcadia</div>
+                <div className={cnBranchNav('Name')}>{repo}</div>
                 <Select
                     size='l'
                     type='branch'
@@ -38,15 +48,15 @@ const BranchNav = ({ onSelect }) => {
                     className={cnBranchNav('Link')}
                     color='default'
                 >
-                    c4d248
+                    {commitHash}
                 </Link> on&nbsp;
                 <Link
                     href="#"
                     className={cnBranchNav('Link')}
                     color='default'
                 >
-                    20 Oct 2017, 12:24
-                </Link> by <span className="User">robot-srch-releaser</span>
+                    {date}, {time}
+                </Link> by <span className="User">{committer}</span>
             </div>
         </div>
     );

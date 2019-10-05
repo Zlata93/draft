@@ -13,6 +13,7 @@ import { withEditorBorderFaded } from '../Editor/_border/Editor_border_faded';
 import { withSectionIndentHXxl0 } from '../Section/_indent-h/Section_indent-h_xxl0';
 import { withSectionIndentVM } from '../Section/_indent-v/Section_indent-v_m';
 
+import { fetchCommitsStartAsync } from '../../store/commits/commits.actions';
 import { fetchBranchesStartAsync } from '../../store/branch/branch.actions';
 import { fetchFilesStartAsync } from '../../store/files/files.actions';
 import { fetchFileStartAsync } from '../../store/file/file.actions';
@@ -45,9 +46,8 @@ const Section = compose(withSectionIndentHXxl)(SectionPresenter);
 const SectionEditor = compose(withSectionIndentHXxl0, withSectionIndentVM)(SectionPresenter);
 const Editor = compose(withEditorBorderFaded)(EditorPresenter);
 
-// Section_indent-t_m Section_indent-b_m Editor Editor_border_faded Editor_indent-h_xxl
-
 const Repo = ({activeTab, branchName, onTabClick, onSelectBranch, match, location }) => {
+    const lastCommit = useSelector(state => state.commits).commits[0];
     const branches = useSelector(state => state.branch).branches;
     const branch = useSelector(state => state.branch).branch;
     const repo = useSelector(state => state.repos).repo;
@@ -56,8 +56,10 @@ const Repo = ({activeTab, branchName, onTabClick, onSelectBranch, match, locatio
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(setRepo(match.params.repo));
-        dispatch(setBranch(match.params.branch));
+        const { repo, branch } = match.params;
+        dispatch(setRepo(repo));
+        dispatch(setBranch(branch));
+        dispatch(fetchCommitsStartAsync(repo, branch));
     }, []);
 
     useEffect(() => {
@@ -82,7 +84,7 @@ const Repo = ({activeTab, branchName, onTabClick, onSelectBranch, match, locatio
         return (
             <>
                 <Section indentH='xxl'>
-                    <BranchNav branchName={branchName} onSelect={onSelectBranch}/>
+                    <BranchNav branchName={branchName} onSelect={onSelectBranch} lastCommit={lastCommit}/>
                     <Tabs tabs={tabs2} activeTab={activeTab} handleClick={onTabClick}/>
                 </Section>
                 <SectionEditor indentH='xxl0' indentV='m'>
@@ -101,7 +103,7 @@ const Repo = ({activeTab, branchName, onTabClick, onSelectBranch, match, locatio
 
     return (
         <Section indentH='xxl'>
-            <BranchNav branchName={branchName} onSelect={onSelectBranch}/>
+            <BranchNav branchName={branchName} onSelect={onSelectBranch} lastCommit={lastCommit}/>
             <Tabs tabs={tabs} activeTab={activeTab} handleClick={onTabClick}/>
             <Table
                 className={cnHomePage('Table')}

@@ -8,6 +8,7 @@ import getPathFromLocation from '../../utils/getPathFromLocation';
 import './HomePage.scss';
 
 import { fetchReposStartAsync } from '../../store/repos/repos.actions';
+import { fetchCommitsStartAsync } from '../../store/commits/commits.actions';
 import { setBranch } from '../../store/branch/branch.actions';
 
 import SectionPresenter from '../../components/Section/Section';
@@ -37,7 +38,7 @@ const HomePage = ({ location }) => {
     const [activeTab, setActiveTab] = useState(tabs[0].id);
     const dispatch = useDispatch();
     const branch = useSelector(state => state.branch).branch;
-    // const repo = useSelector(state => state.repos).repo;
+    const repo = useSelector(state => state.repos).repo;
 
     useEffect(() => {
         dispatch(fetchReposStartAsync());
@@ -47,11 +48,11 @@ const HomePage = ({ location }) => {
         setActiveTab(id);
     };
 
-    const onSelectBranch = (name) => {
-        dispatch(setBranch(name));
+    const onSelectBranch = (branch) => {
+        dispatch(setBranch(branch));
+        dispatch(fetchCommitsStartAsync(repo, branch))
     };
 
-    // console.log(location.pathname);
     let path = getPathFromLocation(location.pathname);
 
     return (
