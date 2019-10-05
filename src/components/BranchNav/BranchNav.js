@@ -14,8 +14,11 @@ const cnBranchNav = cn('BranchNav');
 const Link = compose(withLinkColorDefault)(LinkPresenter);
 const Select = compose(withSelectSizeL)(SelectPresenter);
 
-const BranchNav = ({ branchName, onSelect }) => {
+const BranchNav = ({ onSelect }) => {
     const branches = useSelector(state => state.branch).branches.map(branch => branch.name);
+    const branch = useSelector(state => state.branch).branch;
+
+    console.log(branches);
 
     return (
         <div className={cnBranchNav()}>
@@ -26,7 +29,7 @@ const BranchNav = ({ branchName, onSelect }) => {
                     type='branch'
                     className={cnBranchNav('Select', { color: 'secondary '})}
                     options={branches}
-                    activeOption={branchName}
+                    activeOption={branch}
                     onSelect={onSelect}
                 />
             </div>

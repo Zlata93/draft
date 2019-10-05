@@ -50,22 +50,21 @@ const Select = ({ className, activeOption, options = [], name, type, onSelect, m
                     {
                         options.length && options.map((name, i) => {
                             let link = '';
-                            const trimmedName = name.trim();
                             if (type === 'repo') {
-                                link = `/${trimmedName}/master`;
+                                link = `/${name}/master`;
                             } else {
-                                link = `/${match.params.repo}/${trimmedName}`;
+                                link = `/${match.params.repo}/${name}`;
                             }
                             return (
                                 <Link to={link} key={i}>
                                     <div key={i}
-                                         onClick={() => handleSelect(trimmedName)}
-                                         className={trimmedName === activeOption ?
+                                         onClick={() => handleSelect(name)}
+                                         className={name === activeOption ?
                                              cnSelect('Item', { type: type, state: 'selected' }) :
                                              cnSelect('Item', { type: type })
                                          }
                                     >
-                                        {trimmedName}
+                                        {name}
                                     </div>
                                 </Link>
                             );
