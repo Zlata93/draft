@@ -25,7 +25,7 @@ const Editor = ({ className, headerColor, headerIndentH, headerIndentV, fileName
                 </div>
             </div>
             <pre className={cnEditor('Body')}>
-                {code}
+                {code ? code : 'Loading...'}
             </pre>
         </div>
     );

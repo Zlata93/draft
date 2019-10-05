@@ -15,7 +15,7 @@ const commitsReducer = (state = initialState, { type, payload }) => {
         case commitsTypes.FETCH_COMMITS_FAILURE:
             return { ...state, isFetching: false, error: payload, commits: [] };
         default:
-            return { ...state };
+            return state;
     }
 };
 

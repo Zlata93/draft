@@ -18,7 +18,7 @@ const branchReducer = (state = initialState, { type, payload }) => {
         case branchTypes.SET_BRANCH:
             return { ...state, branch: payload };
         default:
-            return { ...state };
+            return state;
     }
 };
 

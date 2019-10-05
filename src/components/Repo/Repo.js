@@ -1,11 +1,10 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, lazy, Suspense } from 'react';
 import { compose } from '@bem-react/core';
 import { useDispatch, useSelector } from 'react-redux';
 
 import Tabs from '../Tabs/Tabs';
-import Table from '../Table/Table';
+import Spinner from '../Spinner/Spinner';
 import BranchNav from '../BranchNav/BranchNav';
-import FileContent from '../FileContent/FileContent';
 import SectionPresenter from '../Section/Section';
 import { cnHomePage } from '../../pages/HomePage/HomePage';
 import { withSectionIndentHXxl } from '../Section/_indent-h/Section_indent-h_xxl';
@@ -16,6 +15,9 @@ import { fetchFilesStartAsync } from '../../store/files/files.actions';
 import { fetchFileStartAsync } from '../../store/file/file.actions';
 import { setRepo } from '../../store/repos/repos.actions';
 import { setBranch } from '../../store/branch/branch.actions';
+
+const Table = lazy(() => import('../Table/Table'));
+const FileContent = lazy(() => import('../FileContent/FileContent'));
 
 const tabs = [
     {
@@ -67,15 +69,17 @@ const Repo = ({activeTab, onTabClick, onSelectBranch, match, location }) => {
         const pathArr = location.pathname.split('/');
         const fileName = pathArr[pathArr.length - 1];
         return (
-            <FileContent
-                branchName={branch}
-                onSelectBranch={onSelectBranch}
-                lastCommit={lastCommit}
-                activeTab={activeTab}
-                onTabClick={onTabClick}
-                fileName={fileName}
-                file={file}
-            />
+            <Suspense fallback={<Spinner/>}>
+                <FileContent
+                    branchName={branch}
+                    onSelectBranch={onSelectBranch}
+                    lastCommit={lastCommit}
+                    activeTab={activeTab}
+                    onTabClick={onTabClick}
+                    fileName={fileName}
+                    file={file}
+                />
+            </Suspense>
         );
     }
 
@@ -83,14 +87,16 @@ const Repo = ({activeTab, onTabClick, onSelectBranch, match, location }) => {
         <Section indentH='xxl'>
             <BranchNav onSelect={onSelectBranch} lastCommit={lastCommit}/>
             <Tabs tabs={tabs} activeTab={activeTab} handleClick={onTabClick}/>
-            <Table
-                className={cnHomePage('Table')}
-                tableData={activeTab === 1 ?
-                    { head: ['Name'], body: files, type: 'files' } :
-                    { head: ['Name'], body: branches, type: 'branches' }}
-                iconType={activeTab === 1 ? 'dir' : 'branch'}
-                tableType={activeTab === 1 ? 'file' : 'branch'}
-            />
+            <Suspense fallback={<Spinner/>}>
+                <Table
+                    className={cnHomePage('Table')}
+                    tableData={activeTab === 1 ?
+                        { head: ['Name'], body: files, type: 'files' } :
+                        { head: ['Name'], body: branches, type: 'branches' }}
+                    iconType={activeTab === 1 ? 'dir' : 'branch'}
+                    tableType={activeTab === 1 ? 'file' : 'branch'}
+                />
+            </Suspense>
         </Section>
     );
 };
