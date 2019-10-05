@@ -20,7 +20,7 @@ const MyLink = compose(withLinkColorDefault)(LinkPresenter);
 const Arrow = compose(withArrowStateRight, withArrowColorFaded, withArrowSizeL)(ArrowPresenter);
 const IconPlus = compose(withIconPlusWeightBold)(IconPlusPresenter);
 
-const Table = ({ tableData: { head, body }, className, iconType, tableType, location, match }) => {
+const Table = ({ tableData: { head, body }, className, iconType, tableType, location }) => {
     return (
         <table className={cnTable({}, [className])}>
             { head &&
