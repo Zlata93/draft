@@ -21,6 +21,7 @@ const Arrow = compose(withArrowStateRight, withArrowColorFaded, withArrowSizeL)(
 const IconPlus = compose(withIconPlusWeightBold)(IconPlusPresenter);
 
 const Table = ({ tableData: { head, body }, className, iconType, tableType, location }) => {
+
     return (
         <table className={cnTable({}, [className])}>
             { head &&
@@ -41,7 +42,13 @@ const Table = ({ tableData: { head, body }, className, iconType, tableType, loca
             }
             <tbody className={cnTable('Body')}>
                 {
-                    body.length !== 0 && body.map(({ name, id, type, commit, message, committer, updated }) => {
+                    body.length === 0 ?
+                        <tr>
+                            <td className={cnTable('Cell', { type: 'name' })}>
+                                Not a git repository
+                            </td>
+                        </tr> :
+                        body.map(({ name, id, type, commit, message, committer, updated }) => {
                         let path = getPathFromLocation(location.pathname);
 
                         return (

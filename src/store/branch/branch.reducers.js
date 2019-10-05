@@ -8,7 +8,6 @@ const initialState = {
 };
 
 const branchReducer = (state = initialState, { type, payload }) => {
-    console.log(type)
     switch (type) {
         case branchTypes.FETCH_BRANCHES_START:
             return { ...state, isFetching: true };

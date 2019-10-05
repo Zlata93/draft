@@ -6,7 +6,7 @@ import IconPlus from '../IconPlus/IconPlus';
 
 export const cnEditor = cn('Editor');
 
-const Editor = ({ className, headerColor, headerIndentH, headerIndentV, fileName, code }) => {
+const Editor = ({ className, headerColor, headerIndentH, headerIndentV, fileName, code, isLoading }) => {
     return (
         <div className={cnEditor({}, [className])}>
             <div className={cnEditor('Header',
@@ -25,7 +25,7 @@ const Editor = ({ className, headerColor, headerIndentH, headerIndentV, fileName
                 </div>
             </div>
             <pre className={cnEditor('Body')}>
-                {code ? code : 'Loading...'}
+                {isLoading ? 'Loading...' : (code || 'Could not open the file')}
             </pre>
         </div>
     );

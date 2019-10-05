@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { compose } from '@bem-react/core';
 
 import { withSectionIndentHXxl0 } from '../Section/_indent-h/Section_indent-h_xxl0';
@@ -26,6 +27,7 @@ const tabs2 = [
 ];
 
 const FileContent = ({ onSelectBranch, lastCommit, activeTab, onTabClick, fileName, file }) => {
+    const isLoading = useSelector(state => state.file).isFetching;
 
     return (
         <>
@@ -40,6 +42,7 @@ const FileContent = ({ onSelectBranch, lastCommit, activeTab, onTabClick, fileNa
                     headerIndentH='m'
                     headerIndentV='s'
                     fileName={fileName}
+                    isLoading={isLoading}
                     code={file}
                 />
             </SectionEditor>

@@ -16,6 +16,7 @@ const Select = ({ className, activeOption, options = [], name, type, onSelect, m
     const [isOpen, setIsOpen] = useState(false);
 
     const toggleOpen = () => {
+        if (options.length === 0) return;
         setIsOpen(isOpen => !isOpen);
     };
 
@@ -41,7 +42,7 @@ const Select = ({ className, activeOption, options = [], name, type, onSelect, m
             { isOpen &&
                 <div className={cnSelect('Body', { type: type })}>
                     {
-                        options.length && options.map((name, i) => {
+                        options.length > 0 && options.map((name, i) => {
                             let link = '';
                             if (type === 'repo') {
                                 link = `/${name}/master`;
