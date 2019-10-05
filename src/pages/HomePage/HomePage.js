@@ -72,7 +72,7 @@ const HomePage = ({ location }) => {
                         render={(props) => <Repo {...props} activeTab={activeTab} onTabClick={onTabClick} onSelectBranch={onSelectBranch} />}
                     />
                     <Route
-                        path={`${path}/:id`}
+                        path={`${path}/:file`}
                         render={(props) =>
                             <Repo {...props} activeTab={1} />}
                     />

@@ -24,9 +24,11 @@ const Editor = ({ className, headerColor, headerIndentH, headerIndentV, fileName
                     <div className={cnEditor('Action')}/>
                 </div>
             </div>
-            <div className={cnEditor('Body')}>
-                <pre>{code}</pre>
-            </div>
+            <pre className={cnEditor('Body')}>
+                {/*<pre>*/}
+                    {code}
+                {/*</pre>*/}
+            </pre>
         </div>
     );
 };

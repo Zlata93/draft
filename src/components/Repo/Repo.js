@@ -77,6 +77,8 @@ const Repo = ({activeTab, branchName, onTabClick, onSelectBranch, match, locatio
     }, [repo]);
 
     if (location.pathname.includes('.')) {
+        const pathArr = location.pathname.split('/');
+        const fileName = pathArr[pathArr.length - 1];
         return (
             <>
                 <Section indentH='xxl'>
@@ -89,14 +91,10 @@ const Repo = ({activeTab, branchName, onTabClick, onSelectBranch, match, locatio
                         headerColor='default'
                         headerIndentH='m'
                         headerIndentV='s'
-                        fileName=''
+                        fileName={fileName}
                         code={file}
                     />
                 </SectionEditor>
-                {/*<p dangerouslySetInnerHTML={{__html: file }}/>*/}
-                {/*<p>*/}
-                {/*    <pre>{file}</pre>*/}
-                {/*</p>*/}
             </>
         );
     }
