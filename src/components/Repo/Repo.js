@@ -55,6 +55,8 @@ const Repo = ({activeTab, branchName, onTabClick, onSelectBranch, match, locatio
     const file = useSelector(state => state.file).file;
     const dispatch = useDispatch();
 
+    // console.log(location)
+
     useEffect(() => {
         const { repo, branch } = match.params;
         dispatch(setRepo(repo));
@@ -63,12 +65,13 @@ const Repo = ({activeTab, branchName, onTabClick, onSelectBranch, match, locatio
     }, []);
 
     useEffect(() => {
+        const { pathname, state } = location;
         if (repo) {
-            if (location.pathname.includes('.')) {
-                dispatch(fetchFileStartAsync(location.pathname));
+            if (state && state.type === 'file') {
+                dispatch(fetchFileStartAsync(pathname));
                 return;
             }
-            dispatch(fetchFilesStartAsync(location.pathname));
+            dispatch(fetchFilesStartAsync(pathname));
         }
     }, [location.pathname, repo, branch]);
 
@@ -107,7 +110,9 @@ const Repo = ({activeTab, branchName, onTabClick, onSelectBranch, match, locatio
             <Tabs tabs={tabs} activeTab={activeTab} handleClick={onTabClick}/>
             <Table
                 className={cnHomePage('Table')}
-                tableData={activeTab === 1 ? { head: ['Name'], body: files, type: 'files' } : { head: ['Name'], body: branches, type: 'branches' }}
+                tableData={activeTab === 1 ?
+                    { head: ['Name'], body: files, type: 'files' } :
+                    { head: ['Name'], body: branches, type: 'branches' }}
                 iconType={activeTab === 1 ? 'dir' : 'branch'}
                 tableType={activeTab === 1 ? 'file' : 'branch'}
             />

@@ -17,11 +17,11 @@ export const fetchFilesFailure = (error) => ({
 export const fetchFilesStartAsync = (url) => {
     return async (dispatch) => {
         dispatch(fetchFilesStart());
-        // console.log(url.split('/'))
+
         const paramsArr = url.split('/');
         const [, repo, branch] = paramsArr;
         const path = paramsArr.slice(3).join('/');
-        // console.log(path)
+
         try {
             const response = await fetch(`http://localhost:5000/api/repos/${repo}/tree/${branch}/${path}`);
             const files = await response.json();

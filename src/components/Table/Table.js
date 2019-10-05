@@ -49,8 +49,10 @@ const Table = ({ tableData: { head, body }, className, iconType, tableType, loca
                                 { name &&
                                 <td className={cnTable('Cell', { type: 'name' })}>
                                     <Link
-                                        to={`${path}/${name}`}
-                                        params={{ repo: name }}
+                                        to={{
+                                            pathname: `${path}/${name}`,
+                                            state: { type }
+                                        }}
                                     >
                                         <IconPlus
                                             weight='bold'
