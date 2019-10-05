@@ -32,7 +32,7 @@ export const fetchBranchesStartAsync = (repo) => {
                 const branchArr = branches.output.filter(branch => branch);
                 dispatch(fetchBranchesSuccess(branchArr));
             } else {
-                fetchBranchesFailure(branches.error)
+                dispatch(fetchBranchesFailure(branches.error));
             }
         } catch (e) {
             dispatch(fetchBranchesFailure(e));

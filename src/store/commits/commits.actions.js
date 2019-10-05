@@ -24,7 +24,7 @@ export const fetchCommitsStartAsync = (repo, branch) => {
             if (commits.output) {
                 dispatch(fetchCommitsSuccess(commits.output));
             } else {
-                fetchCommitsFailure(commits.error)
+                dispatch(fetchCommitsFailure(commits.error));
             }
         } catch (e) {
             dispatch(fetchCommitsFailure(e));
