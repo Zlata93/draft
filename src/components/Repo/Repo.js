@@ -29,56 +29,48 @@ const tabs2 = [
     },
     // {
     //     id: 2,
-    //     name: 'branches'
+    //     name: 'history'
     // }
 ];
 
 const Repo = ({activeTab, branchName, onTabClick, onSelectBranch, match, location }) => {
     const branches = useSelector(state => state.branch).branches;
+    const branch = useSelector(state => state.branch).branch;
     const repo = useSelector(state => state.repos).repo;
     const files = useSelector(state => state.files).files;
     const file = useSelector(state => state.file).file;
     const dispatch = useDispatch();
 
-    // console.log(repo);
-    // console.log(files);
-    // console.log(branch);
-    console.log(location.pathname);
-
     useEffect(() => {
-        if (location.pathname.includes('.')) {
-            dispatch(fetchFileStartAsync(location.pathname));
-            return;
-        }
-        // console.log(location.pathname);
         dispatch(setRepo(match.params.repo));
         dispatch(setBranch(match.params.branch));
-        dispatch(fetchFilesStartAsync(location.pathname));
-        // dispatch(fetchFilesStartAsync(match.params.repo, match.params.branch));
-        dispatch(fetchBranchesStartAsync(match.params.repo));
     }, []);
 
     useEffect(() => {
         if (repo) {
-            console.log('effect')
             if (location.pathname.includes('.')) {
                 dispatch(fetchFileStartAsync(location.pathname));
                 return;
             }
-            console.log('dispatch')
             dispatch(fetchFilesStartAsync(location.pathname));
-            // dispatch(fetchFilesStartAsync(repo, match.params.branch));
+        }
+    }, [location.pathname, repo, branch]);
+
+    useEffect(() => {
+        if (repo) {
             dispatch(fetchBranchesStartAsync(repo));
         }
-    }, [location.pathname]);
+    }, [repo]);
 
     if (location.pathname.includes('.')) {
         return (
             <div>
                 <BranchNav branchName={branchName} onSelect={onSelectBranch}/>
                 <Tabs tabs={tabs2} activeTab={activeTab} handleClick={onTabClick}/>
-                <p dangerouslySetInnerHTML={{__html: file }}/>
-                {/*<p dangerouslySetInnerHTML={{__html: file }}>{file}</p>*/}
+                {/*<p dangerouslySetInnerHTML={{__html: file }}/>*/}
+                <p>
+                    <pre>{file}</pre>
+                </p>
             </div>
         );
     }

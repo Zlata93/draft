@@ -1,12 +1,8 @@
 import React, { useState } from 'react';
 import { Link, withRouter } from 'react-router-dom';
-// import { useDispatch, useSelector } from 'react-redux';
 import { compose, composeU } from '@bem-react/core';
 import { cn } from '@bem-react/classname';
 import './Select.scss'
-
-// import { setRepo } from '../../store/repos/repos.actions';
-// import { fetchFilesStartAsync } from '../../store/files/files.actions';
 
 import { withArrowStateDown } from '../Arrow/_state/Arrow_state_down';
 import { withArrowStateUp } from '../Arrow/_state/Arrow_state_up';
@@ -18,15 +14,12 @@ const Arrow = compose(composeU(withArrowStateUp, withArrowStateDown))(ArrowPrese
 
 const Select = ({ className, activeOption, options = [], name, type, onSelect, match }) => {
     const [isOpen, setIsOpen] = useState(false);
-    // const branch = useSelector(state => state.branch).branch;
-    // const dispatch = useDispatch();
 
     const toggleOpen = () => {
         setIsOpen(isOpen => !isOpen);
     };
 
     const handleSelect = (repo) => {
-        // dispatch(fetchFilesStartAsync(repo, 'master'));
         onSelect(repo);
         setIsOpen(false);
     };

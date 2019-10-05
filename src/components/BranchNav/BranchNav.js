@@ -18,8 +18,6 @@ const BranchNav = ({ onSelect }) => {
     const branches = useSelector(state => state.branch).branches.map(branch => branch.name);
     const branch = useSelector(state => state.branch).branch;
 
-    console.log(branches);
-
     return (
         <div className={cnBranchNav()}>
             <div className={cnBranchNav('Header')}>
