@@ -26,7 +26,7 @@ export const fetchReposStartAsync = () => {
         try {
             const response = await fetch('http://localhost:5000/api/repos');
             const repos = await response.json();
-            dispatch(fetchReposSuccess(repos.repos));
+            dispatch(fetchReposSuccess(repos));
         } catch (e) {
             dispatch(fetchReposFailure(e));
         }
