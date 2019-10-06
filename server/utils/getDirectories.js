@@ -10,14 +10,7 @@ const util = require('util');
 */
 async function getDirectories (pathToRepos) {
     const dirs = await util.promisify(fs.readdir)(pathToRepos);
-    const repos = [];
-    for (let dir of dirs) {
-        const stats = await util.promisify(fs.stat)(pathToRepos);
-        if (stats.isDirectory()) {
-            repos.push(dir)
-        }
-    }
-    return repos
+    return dirs.filter(f => !/\..*/g.test(f));
 }
 
 module.exports = getDirectories;

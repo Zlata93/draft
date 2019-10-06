@@ -1,10 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const { exec } = require('child_process');
-const getDirectories = require('../../handlers/getDirectories');
+const getDirectories = require('../../utils/getDirectories');
+const getCommits = require('../../handlers/getCommits');
 // const getDirContent = require('../../utils/getDirContent');
 const pathToRepos = require('../../utils/pathToRepos');
 const createChildProcess = require('../../utils/createChildProcess');
+const { spawn } = require('child_process');
 
 // @route    GET api/repos
 // @desc     Возвращает массив репозиториев, которые имеются в папке
@@ -19,17 +21,22 @@ router.get('/', async (req, res) => {
 // @access   Public
 router.get('/:repositoryId/commits/:commitHash', (req, res) => {
     const { repositoryId, commitHash } = req.params;
-    const { page, limit } = req.query;
+    let { page, limit } = req.query;
+    page = page && parseInt(page, 10);
+    limit = limit && parseInt(limit, 10);
 
-    createChildProcess(
+    const child = spawn(
         'git',
         ['log', `${commitHash}`, '--pretty=format:%H %cd %cN', '--date=format:%d-%b-%Y %H:%M'],
-        `${pathToRepos}/${repositoryId}`,
-        'array',
-        res,
-        page && parseInt(page, 10),
-        limit && parseInt(limit, 10)
-    );
+        { cwd: `${pathToRepos}/${repositoryId}` });
+
+    getCommits(child, (error, commits) => {
+        if(error) {
+            res.send({ error })
+        } else {
+            res.send(commits);
+        }
+    }, page, limit);
 });
 
 // @route    GET /api/repos/:repositoryId/branches/:branch
