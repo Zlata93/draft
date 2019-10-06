@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test:int": "./node_modules/.bin/hermione /tests/integration/index.js",
+    "test:unit": "mocha tests/unit/*"
   },
   "author": "Zlata Kotlova",
   "license": "ISC",
