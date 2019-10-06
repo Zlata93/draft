@@ -1,0 +1,89 @@
+@import '../../themes';
+
+.Select {
+	position: relative;
+
+	font-size: var(--font-s);
+
+	cursor: pointer;
+
+	&-Name {
+		&_weight_bold {
+			font-weight: bold;
+		}
+		&_color {
+			&_secondary {
+				color: var(--secondary);
+			}
+		}
+	}
+
+	&-Arrow {
+		position: absolute;
+
+		top: 35%;
+		right: -15px;
+
+		&_type {
+			&_branch {
+				top: 45%;
+			}
+			&_repo {
+				top: 35%;
+			}
+		}
+	}
+
+	&-Body {
+		position: absolute;
+		background: #fff;
+		box-shadow: 0 0 17px rgba(0, 0, 0, 0.16);
+		z-index: 1;
+		max-height: 210px;
+		overflow-y: scroll;
+
+		& a {
+			color: var(--primary);
+		}
+
+		&_type {
+			&_branch {
+				top: 45px;
+				width: 320px;
+			}
+			&_repo {
+				padding: 20px;
+				top: 102%;
+			}
+		}
+	}
+
+	&-Item {
+		cursor: pointer;
+		font-size: var(--font-s);
+
+		&_type {
+			&_branch {
+				padding: 10px;
+				border-bottom: 1px solid var(--border-faded);
+
+				&:hover, &:active, &:focus {
+					background: #4f4f4f;
+					color: #fff;
+				}
+
+				&.Select-Item_state_selected {
+					background: #4f4f4f;
+					color: #fff;
+				}
+			}
+			&_repo {
+				padding: 5px 0;
+
+				&:first-of-type {
+					padding-top: 0;
+				}
+			}
+		}
+	}
+}

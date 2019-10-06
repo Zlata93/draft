@@ -1,0 +1,11 @@
+@import '../../themes';
+
+.User {
+	display: inline-block;
+
+	color: var(--primary);
+
+	&::first-letter {
+		color: var(--accented);
+	}
+}

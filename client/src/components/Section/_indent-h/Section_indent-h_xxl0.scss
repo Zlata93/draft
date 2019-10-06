@@ -1,0 +1,11 @@
+@import '../../../themes';
+
+.Section_indentH_xxl0 {
+    margin-right: var(--space-xxl);
+    margin-left: var(--space-xxl);
+
+    @media screen and (max-width: $phone) {
+        margin-right: 0;
+        margin-left: 0;
+    }
+}
