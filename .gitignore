@@ -7,10 +7,11 @@ node_modules
 .pnp.js
 .idea
 
-images
 
 # testing
 /coverage
+/images
+/tests/hermione-html-report
 
 # production
 /build
