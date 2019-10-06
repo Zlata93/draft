@@ -15,7 +15,7 @@ const Repos = () => {
     }, [dispatch]);
     return (
         <Section indentH='xxl'>
-            <div style={{ padding: '20px 0'}}>Select repository</div>
+            <div style={{ padding: '20px 0'}} className='MainPage'>Select repository</div>
         </Section>
     );
 };

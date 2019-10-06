@@ -1,6 +1,7 @@
 module.exports = {
     baseUrl: `http://localhost:3000`,
-    gridUrl: 'http://localhost:4444/wd/hub',
+    gridUrl: 'http://0.0.0.0:4444/wd/hub',
+    compositeImage: true,
 
     sets: {
         common: {
@@ -23,9 +24,10 @@ module.exports = {
 
     plugins: {
         'html-reporter/hermione': {
-            path: 'hermione-html-report',
+            path: './tests/hermione-html-report',
             defaultView: 'all'
         }
-    }
+    },
 
+    screenshotsDir: "./tests/hermione/screens"
 };
