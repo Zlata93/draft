@@ -24,6 +24,12 @@ export const setBranch = (branch) => {
 export const fetchBranchesStartAsync = (repo) => {
     return async (dispatch) => {
         dispatch(fetchBranchesStart());
+        if (repo === 'test_repo') {
+            dispatch(fetchBranchesSuccess([
+                { name: 'master', id: 1 }
+            ]));
+            return;
+        }
 
         try {
             const response = await fetch(`http://localhost:5000/api/repos/${repo}/branches`);

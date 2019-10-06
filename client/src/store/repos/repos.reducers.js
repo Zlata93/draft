@@ -2,7 +2,7 @@ import reposTypes from './repos.types';
 
 const initialState = {
     repo: '',
-    repos: [],
+    repos: ['test_repo'],
     isFetching: false,
     error: null
 };

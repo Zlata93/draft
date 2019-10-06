@@ -16,11 +16,27 @@ export const fetchFilesFailure = (error) => ({
 
 export const fetchFilesStartAsync = (url) => {
     return async (dispatch) => {
-        dispatch(fetchFilesStart());
 
         const paramsArr = url.split('/');
         const [, repo, branch] = paramsArr;
         const path = paramsArr.slice(3).join('/');
+
+        if (repo === 'test_repo') {
+            if (!path) {
+                dispatch(fetchFilesStart());
+                dispatch(fetchFilesSuccess([
+                    { name: 'src', id: 1, type: 'dir'},
+                    { name: 'README.md', id: 2, type: 'file'}
+                ]));
+                return;
+            }
+            dispatch(fetchFilesStart());
+            dispatch(fetchFilesSuccess([
+                { name: 'test.js', id: 1, type: 'file' }
+            ]));
+            return;
+        }
+        dispatch(fetchFilesStart());
 
         try {
             const response = await fetch(`http://localhost:5000/api/repos/${repo}/tree/${branch}/${path}`);

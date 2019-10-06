@@ -13,6 +13,11 @@
     "express": "^4.17.1"
   },
   "devDependencies": {
-    "eslint": "^6.5.0"
+    "chai": "^4.2.0",
+    "eslint": "^6.5.0",
+    "hermione": "^2.12.6",
+    "html-reporter": "^4.13.1",
+    "mocha": "^6.2.1",
+    "selenium-standalone": "^6.16.0"
   }
 }
