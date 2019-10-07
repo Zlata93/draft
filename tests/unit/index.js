@@ -26,32 +26,46 @@ describe('Получение списка директорий', function () {
 });
 
 describe('Получение списка коммитов', function () {
+    let err = null;
+    let commits = [];
+    const cb = (error, result) => {
+        if(error) {
+            err = error;
+        } else {
+            commits = result;
+        }
+    };
+
+    const onData = (event, cb) => {
+        if (event === 'data') {
+            cb('6fcebc9fceda723df5165129435d8656d3719e68 05-Oct-2019 22:43 Zlata Kotlova\n' +
+                '5f5935b149f6086989caee4a9c9d22372b0a9800 05-Oct-2019 22:15 Zlata Kotlova\n' +
+                '5f5935b149f6086989caee4a9c9d22372b0a9800 05-Oct-2019 22:15 Zlata Kotlova\n' +
+                '0b13ce9ae279f56aa2199fca2bc859106a42c97e 05-Oct-2019 21:49 Zlata Kotlova');
+        } else {
+            cb();
+        }
+    };
+
     it('возвращает объект с массивом коммитов', async () => {
-        let err = null;
-        let commits = [];
-        const cb = (error, result) => {
-            if(error) {
-                err = error;
-            } else {
-                commits = result;
-            }
-        };
-
-        child.stdout.on = (event, cb) => {
-            if (event === 'data') {
-                cb('6fcebc9fceda723df5165129435d8656d3719e68 05-Oct-2019 22:43 Zlata Kotlova\n' +
-                    '5f5935b149f6086989caee4a9c9d22372b0a9800 05-Oct-2019 22:15 Zlata Kotlova\n' +
-                    '0b13ce9ae279f56aa2199fca2bc859106a42c97e 05-Oct-2019 21:49 Zlata Kotlova');
-            } else {
-                cb();
-            }
-        };
-
+        child.stdout.on = onData;
         getCommits(child, cb);
-
         expect(commits).to.deep.equal({
             output: [
                 '6fcebc9fceda723df5165129435d8656d3719e68 05-Oct-2019 22:43 Zlata Kotlova',
+                '5f5935b149f6086989caee4a9c9d22372b0a9800 05-Oct-2019 22:15 Zlata Kotlova',
+                '5f5935b149f6086989caee4a9c9d22372b0a9800 05-Oct-2019 22:15 Zlata Kotlova',
+                '0b13ce9ae279f56aa2199fca2bc859106a42c97e 05-Oct-2019 21:49 Zlata Kotlova'
+            ]
+        });
+    });
+
+    it('пагинация работает', async () => {
+        child.stdout.on = onData;
+        getCommits(child, cb, 2, 2);
+
+        expect(commits).to.deep.equal({
+            output: [
                 '5f5935b149f6086989caee4a9c9d22372b0a9800 05-Oct-2019 22:15 Zlata Kotlova',
                 '0b13ce9ae279f56aa2199fca2bc859106a42c97e 05-Oct-2019 21:49 Zlata Kotlova'
             ]
