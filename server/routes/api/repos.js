@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { exec } = require('child_process');
 const getDirectories = require('../../utils/getDirectories');
+const getFilesTree = require('../../utils/getFilesTree');
 const getBranches = require('../../handlers/getBranches');
 const getCommits = require('../../handlers/getCommits');
 const getDiff = require('../../handlers/getDiff');
@@ -104,13 +105,19 @@ router.get('/:repositoryId/commits/:commitHash/diff', (req, res) => {
 router.get(['/:repositoryId/tree/:commitHash/:path([^/]*)', '/:repositoryId', '/:repositoryId/tree/:commitHash'], (req, res) => {
     const { repositoryId, commitHash = 'master', path } = req.params;
     try {
-        createChildProcess(
+        const child = spawn(
             'git',
             ['ls-tree', '--name-only', `${commitHash}`],
-            `${pathToRepos}/${repositoryId}/${path ? path : ''}`,
-            'filesArray',
-            res
-        );
+            { cwd: `${pathToRepos}/${repositoryId}/${path ? path : ''}` });
+
+        getFilesTree(child, (error, files) => {
+            if(error) {
+                res.send({ error });
+                return;
+            } else {
+                res.send(files);
+            }
+        });
     } catch (e) {
         console.error(e);
     }

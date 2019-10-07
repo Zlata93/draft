@@ -1,6 +1,7 @@
 const path = require('path');
 const { expect } = require('chai');
 const getDirectories = require('../../server/utils/getDirectories');
+const getFilesTree = require('../../server/utils/getFilesTree');
 const getBranches = require('../../server/handlers/getBranches');
 const getCommits = require('../../server/handlers/getCommits');
 const getDiff = require('../../server/handlers/getDiff');
@@ -38,7 +39,9 @@ describe('Получение списка коммитов', function () {
 
         child.stdout.on = (event, cb) => {
             if (event === 'data') {
-                cb('6fcebc9fceda723df5165129435d8656d3719e68 05-Oct-2019 22:43 Zlata Kotlova\n5f5935b149f6086989caee4a9c9d22372b0a9800 05-Oct-2019 22:15 Zlata Kotlova\n0b13ce9ae279f56aa2199fca2bc859106a42c97e 05-Oct-2019 21:49 Zlata Kotlova');
+                cb('6fcebc9fceda723df5165129435d8656d3719e68 05-Oct-2019 22:43 Zlata Kotlova\n' +
+                    '5f5935b149f6086989caee4a9c9d22372b0a9800 05-Oct-2019 22:15 Zlata Kotlova\n' +
+                    '0b13ce9ae279f56aa2199fca2bc859106a42c97e 05-Oct-2019 21:49 Zlata Kotlova');
             } else {
                 cb();
             }
@@ -113,5 +116,36 @@ describe('Получение diff коммтов', function () {
         getDiff(child, cb);
 
         expect(diff).to.have.property('output');
+    });
+});
+
+describe('Получение объекта с массивом файлов', function () {
+    it('возвращает объект с массивом объектов с полями name, type, id', async () => {
+        let err = null;
+        let files = '';
+        const cb = (error, result) => {
+            if(error) {
+                err = error;
+            } else {
+                files = result;
+            }
+        };
+
+        child.stdout.on = (event, cb) => {
+            if (event === 'data') {
+                cb('components\ntest.js\n');
+            } else {
+                cb();
+            }
+        };
+
+        getFilesTree(child, cb);
+
+        expect(files).to.deep.equal({
+            output: [
+                { name: 'components', id: 0, type: 'dir' },
+                { name: 'test.js', id: 1, type: 'file' },
+            ]
+        });
     });
 });
