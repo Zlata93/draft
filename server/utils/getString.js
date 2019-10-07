@@ -1,4 +1,4 @@
-function getDiff(child, cb) {
+function getString(child, cb) {
     let output = '';
     let error = null;
 
@@ -14,4 +14,4 @@ function getDiff(child, cb) {
     });
 }
 
-module.exports = getDiff;
+module.exports = getString;

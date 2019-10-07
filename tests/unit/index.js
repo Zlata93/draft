@@ -2,9 +2,9 @@ const path = require('path');
 const { expect } = require('chai');
 const getDirectories = require('../../server/utils/getDirectories');
 const getFilesTree = require('../../server/utils/getFilesTree');
-const getBranches = require('../../server/handlers/getBranches');
-const getCommits = require('../../server/handlers/getCommits');
-const getDiff = require('../../server/handlers/getDiff');
+const getBranches = require('../../server/utils/getBranches');
+const getCommits = require('../../server/utils/getCommits');
+const getString = require('../../server/utils/getString');
 
 const child = {
     stdout: {
@@ -93,29 +93,33 @@ describe('Получение списка веток', function () {
     });
 });
 
-describe('Получение diff коммтов', function () {
+describe('Получение объекта со строкой', function () {
+    let err = null;
+    let diff = '';
+    const cb = (error, result) => {
+        if(error) {
+            err = error;
+        } else {
+            diff = result;
+        }
+    };
+
+    child.stdout.on = (event, cb) => {
+        if (event === 'data') {
+            cb('diff goes here');
+        } else {
+            cb();
+        }
+    };
+
     it('возвращает объект с полем output', async () => {
-        let err = null;
-        let diff = '';
-        const cb = (error, result) => {
-            if(error) {
-                err = error;
-            } else {
-                diff = result;
-            }
-        };
-
-        child.stdout.on = (event, cb) => {
-            if (event === 'data') {
-                cb('diff goes here');
-            } else {
-                cb();
-            }
-        };
-
-        getDiff(child, cb);
-
+        getString(child, cb);
         expect(diff).to.have.property('output');
+    });
+
+    it('поле output содержит непустую строку', async () => {
+        getString(child, cb);
+        expect(diff.output).to.be.a('string').that.is.not.empty;
     });
 });
 

@@ -3,12 +3,10 @@ const router = express.Router();
 const { exec } = require('child_process');
 const getDirectories = require('../../utils/getDirectories');
 const getFilesTree = require('../../utils/getFilesTree');
-const getBranches = require('../../handlers/getBranches');
-const getCommits = require('../../handlers/getCommits');
-const getDiff = require('../../handlers/getDiff');
-// const getDirContent = require('../../utils/getDirContent');
+const getBranches = require('../../utils/getBranches');
+const getCommits = require('../../utils/getCommits');
+const getString = require('../../utils/getString');
 const pathToRepos = require('../../utils/pathToRepos');
-const createChildProcess = require('../../utils/createChildProcess');
 const { spawn } = require('child_process');
 
 // @route    GET api/repos
@@ -83,7 +81,7 @@ router.get('/:repositoryId/commits/:commitHash/diff', (req, res) => {
             ['diff', `${commitHash}`, `${commitHash}~`],
             { cwd: `${pathToRepos}/${repositoryId}` });
 
-        getDiff(child, (error, diff) => {
+        getString(child, (error, diff) => {
             if(error) {
                 res.send({ error });
                 return;
@@ -129,13 +127,24 @@ router.get(['/:repositoryId/tree/:commitHash/:path([^/]*)', '/:repositoryId', '/
 // @access   Public
 router.get('/:repositoryId/blob/:commitHash/:pathToFile([^/]*)', (req, res) => {
     const { repositoryId, commitHash, pathToFile } = req.params;
-    createChildProcess(
-        'git',
-        ['show', `${commitHash}~:${pathToFile}`],
-        `${pathToRepos}/${repositoryId}`,
-        'string',
-        res
-    );
+
+    try {
+        const child = spawn(
+            'git',
+            ['show', `${commitHash}~:${pathToFile}`],
+            { cwd: `${pathToRepos}/${repositoryId}` });
+
+        getString(child, (error, file) => {
+            if(error) {
+                res.send({ error });
+                return;
+            } else {
+                res.send(file);
+            }
+        });
+    } catch (e) {
+        console.error(e);
+    }
 });
 
 // @route    DELETE /api/repos/:repositoryId
