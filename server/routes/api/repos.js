@@ -4,6 +4,7 @@ const { exec } = require('child_process');
 const getDirectories = require('../../utils/getDirectories');
 const getBranches = require('../../handlers/getBranches');
 const getCommits = require('../../handlers/getCommits');
+const getDiff = require('../../handlers/getDiff');
 // const getDirContent = require('../../utils/getDirContent');
 const pathToRepos = require('../../utils/pathToRepos');
 const createChildProcess = require('../../utils/createChildProcess');
@@ -74,13 +75,24 @@ router.get('/:repositoryId/branches', (req, res) => {
 // @access   Public
 router.get('/:repositoryId/commits/:commitHash/diff', (req, res) => {
     const { repositoryId, commitHash } = req.params;
-    createChildProcess(
-        'git',
-        ['diff', `${commitHash}`, `${commitHash}~`],
-        `${pathToRepos}/${repositoryId}`,
-        'string',
-        res
-    );
+
+    try {
+        const child = spawn(
+            'git',
+            ['diff', `${commitHash}`, `${commitHash}~`],
+            { cwd: `${pathToRepos}/${repositoryId}` });
+
+        getDiff(child, (error, diff) => {
+            if(error) {
+                res.send({ error });
+                return;
+            } else {
+                res.send(diff);
+            }
+        });
+    } catch (e) {
+        console.error(e);
+    }
 });
 
 // @route    GET /api/repos/:repositoryId(/tree/:commitHash/:path)

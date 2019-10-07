@@ -1,8 +1,9 @@
 const path = require('path');
 const { expect } = require('chai');
 const getDirectories = require('../../server/utils/getDirectories');
-const getCommits = require('../../server/handlers/getCommits');
 const getBranches = require('../../server/handlers/getBranches');
+const getCommits = require('../../server/handlers/getCommits');
+const getDiff = require('../../server/handlers/getDiff');
 
 const child = {
     stdout: {
@@ -24,7 +25,7 @@ describe('Получение списка директорий', function () {
 });
 
 describe('Получение списка коммитов', function () {
-    it('возвращает массив с коммитами', async () => {
+    it('возвращает объект с массивом коммитов', async () => {
         let err = null;
         let commits = [];
         const cb = (error, result) => {
@@ -56,7 +57,7 @@ describe('Получение списка коммитов', function () {
 });
 
 describe('Получение списка веток', function () {
-    it('возвращает массив с именами и id веток', async () => {
+    it('возвращает объект с массивом объектов с именами и id веток', async () => {
         let err = null;
         let branches = [];
         const cb = (error, result) => {
@@ -86,5 +87,31 @@ describe('Получение списка веток', function () {
                 { name: 'tests', id: 4 }
             ]
         });
+    });
+});
+
+describe('Получение diff коммтов', function () {
+    it('возвращает объект с полем output', async () => {
+        let err = null;
+        let diff = '';
+        const cb = (error, result) => {
+            if(error) {
+                err = error;
+            } else {
+                diff = result;
+            }
+        };
+
+        child.stdout.on = (event, cb) => {
+            if (event === 'data') {
+                cb('diff goes here');
+            } else {
+                cb();
+            }
+        };
+
+        getDiff(child, cb);
+
+        expect(diff).to.have.property('output');
     });
 });
