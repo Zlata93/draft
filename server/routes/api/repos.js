@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { exec } = require('child_process');
 const getDirectories = require('../../utils/getDirectories');
+const getBranches = require('../../handlers/getBranches');
 const getCommits = require('../../handlers/getCommits');
 // const getDirContent = require('../../utils/getDirContent');
 const pathToRepos = require('../../utils/pathToRepos');
@@ -25,18 +26,22 @@ router.get('/:repositoryId/commits/:commitHash', (req, res) => {
     page = page && parseInt(page, 10);
     limit = limit && parseInt(limit, 10);
 
-    const child = spawn(
-        'git',
-        ['log', `${commitHash}`, '--pretty=format:%H %cd %cN', '--date=format:%d-%b-%Y %H:%M'],
-        { cwd: `${pathToRepos}/${repositoryId}` });
+    try {
+        const child = spawn(
+            'git',
+            ['log', `${commitHash}`, '--pretty=format:%H %cd %cN', '--date=format:%d-%b-%Y %H:%M'],
+            { cwd: `${pathToRepos}/${repositoryId}` });
 
-    getCommits(child, (error, commits) => {
-        if(error) {
-            res.send({ error })
-        } else {
-            res.send(commits);
-        }
-    }, page, limit);
+        getCommits(child, (error, commits) => {
+            if(error) {
+                res.send({ error })
+            } else {
+                res.send(commits);
+            }
+        }, page, limit);
+    } catch (e) {
+        console.error(e);
+    }
 });
 
 // @route    GET /api/repos/:repositoryId/branches/:branch
@@ -45,13 +50,23 @@ router.get('/:repositoryId/commits/:commitHash', (req, res) => {
 router.get('/:repositoryId/branches', (req, res) => {
     const { repositoryId } = req.params;
 
-    createChildProcess(
-        'git',
-        ['branch'],
-        `${pathToRepos}/${repositoryId}`,
-        'branchArray',
-        res
-    );
+    try {
+        const child = spawn(
+            'git',
+            ['branch'],
+            { cwd: `${pathToRepos}/${repositoryId}` });
+
+        getBranches(child, (error, branches) => {
+            if(error) {
+                res.send({ error });
+                return;
+            } else {
+                res.send(branches);
+            }
+        });
+    } catch (e) {
+        console.error(e);
+    }
 });
 
 // @route    GET /api/repos/:repositoryId/commits/:commitHash/diff
@@ -76,13 +91,17 @@ router.get('/:repositoryId/commits/:commitHash/diff', (req, res) => {
 // @access   Public
 router.get(['/:repositoryId/tree/:commitHash/:path([^/]*)', '/:repositoryId', '/:repositoryId/tree/:commitHash'], (req, res) => {
     const { repositoryId, commitHash = 'master', path } = req.params;
-    createChildProcess(
-        'git',
-        ['ls-tree', '--name-only', `${commitHash}`],
-        `${pathToRepos}/${repositoryId}/${path ? path : ''}`,
-        'filesArray',
-        res
-    );
+    try {
+        createChildProcess(
+            'git',
+            ['ls-tree', '--name-only', `${commitHash}`],
+            `${pathToRepos}/${repositoryId}/${path ? path : ''}`,
+            'filesArray',
+            res
+        );
+    } catch (e) {
+        console.error(e);
+    }
 });
 
 // @route    GET /api/repos/:repositoryId/blob/:commitHash/:pathToFile

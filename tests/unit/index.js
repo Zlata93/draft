@@ -2,6 +2,7 @@ const path = require('path');
 const { expect } = require('chai');
 const getDirectories = require('../../server/utils/getDirectories');
 const getCommits = require('../../server/handlers/getCommits');
+const getBranches = require('../../server/handlers/getBranches');
 
 const child = {
     stdout: {
@@ -49,6 +50,40 @@ describe('Получение списка коммитов', function () {
                 '6fcebc9fceda723df5165129435d8656d3719e68 05-Oct-2019 22:43 Zlata Kotlova',
                 '5f5935b149f6086989caee4a9c9d22372b0a9800 05-Oct-2019 22:15 Zlata Kotlova',
                 '0b13ce9ae279f56aa2199fca2bc859106a42c97e 05-Oct-2019 21:49 Zlata Kotlova'
+            ]
+        });
+    });
+});
+
+describe('Получение списка веток', function () {
+    it('возвращает массив с именами и id веток', async () => {
+        let err = null;
+        let branches = [];
+        const cb = (error, result) => {
+            if(error) {
+                err = error;
+            } else {
+                branches = result;
+            }
+        };
+
+        child.stdout.on = (event, cb) => {
+            if (event === 'data') {
+                cb('editor\n  master\n  redux\n  server\n* tests\n');
+            } else {
+                cb();
+            }
+        };
+
+        getBranches(child, cb);
+
+        expect(branches).to.deep.equal({
+            output: [
+                { name: 'editor', id: 0 },
+                { name: 'master', id: 1 },
+                { name: 'redux', id: 2 },
+                { name: 'server', id: 3 },
+                { name: 'tests', id: 4 }
             ]
         });
     });

@@ -1,4 +1,3 @@
-
 function getCommits(child, cb, page, limit) {
     let output = '';
     let error = null;
