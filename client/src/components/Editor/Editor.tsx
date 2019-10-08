@@ -1,17 +1,24 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { cn } from '@bem-react/classname';
-import { Light as SyntaxHighlighter } from 'react-syntax-highlighter';
-import js from 'react-syntax-highlighter/dist/esm/languages/hljs/javascript';
+import SyntaxHighlighter from 'react-syntax-highlighter';
 import { codeStyle } from './styles';
 import './Editor.scss';
 
 import IconPlus from '../IconPlus/IconPlus';
 
-SyntaxHighlighter.registerLanguage('javascript', js);
+export interface EditorProps {
+    className?: string;
+    headerColor: string;
+    headerIndentH: string;
+    headerIndentV: string;
+    fileName: string;
+    code: string;
+    isLoading: boolean;
+}
 
 export const cnEditor = cn('Editor');
 
-const Editor = ({ className, headerColor, headerIndentH, headerIndentV, fileName, code, isLoading }) => {
+const Editor: FC<EditorProps> = ({ className, headerColor, headerIndentH, headerIndentV, fileName, code, isLoading }) => {
 
     return (
         <div className={cnEditor({}, [className])}>
@@ -33,7 +40,6 @@ const Editor = ({ className, headerColor, headerIndentH, headerIndentV, fileName
             <SyntaxHighlighter
                 style={codeStyle}
                 showLineNumbers
-                // lineNumberContainerStyle={{ paddingRight: '15px' }}
                 lineNumberStyle={{ color: '#c7c7c7' }}
             >
                 {isLoading ? 'Loading...' : (code || 'Could not open the file')}
