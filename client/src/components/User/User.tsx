@@ -1,7 +1,11 @@
 import React from 'react';
-import './User.scss'
+import './User.scss';
 
-const User = ({ children }) => {
+export interface UserProps {
+    children: string;
+}
+
+const User: React.FC<UserProps> = ({ children }) => {
     return (
         <span className='User'>
             {children}

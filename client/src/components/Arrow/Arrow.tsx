@@ -8,7 +8,6 @@ export interface ArrowProps {
     className?: string;
 }
 
-
 const Arrow: React.FC<ArrowProps> = ({className}) => {
     return <i className={cnArrow({}, [className])}/>
 };
