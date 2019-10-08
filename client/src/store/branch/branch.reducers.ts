@@ -1,12 +1,12 @@
 import { FETCH_BRANCHES_START, FETCH_BRANCHES_SUCCESS, FETCH_BRANCHES_FAILURE, SET_BRANCH, BranchesActionTypes, Branch } from './branch.types';
 
-
 export interface BranchState {
     branch: string
     branches: Branch[]
     isFetching: boolean,
     error: null | string
 }
+
 const initialState: BranchState = {
     branch: 'master',
     branches: [],

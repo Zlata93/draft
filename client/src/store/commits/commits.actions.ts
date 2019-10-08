@@ -1,20 +1,26 @@
-import commitsTypes from './commits.types';
+import { FETCH_COMMITS_START, FETCH_COMMITS_SUCCESS, FETCH_COMMITS_FAILURE, CommitsActionTypes } from './commits.types';
+import { ThunkAction } from "redux-thunk";
+import { AppState } from "../index";
+import { Action } from "redux";
 
-export const fetchCommitsStart = () => ({
-    type: commitsTypes.FETCH_COMMITS_START
+export const fetchCommitsStart = ():CommitsActionTypes => ({
+    type: FETCH_COMMITS_START
 });
 
-export const fetchCommitsSuccess = (commits) => ({
-    type: commitsTypes.FETCH_COMMITS_SUCCESS,
+export const fetchCommitsSuccess = (commits: string[]):CommitsActionTypes => ({
+    type: FETCH_COMMITS_SUCCESS,
     payload: commits
 });
 
-export const fetchCommitsFailure = (error) => ({
-    type: commitsTypes.FETCH_COMMITS_FAILURE,
+export const fetchCommitsFailure = (error: string):CommitsActionTypes => ({
+    type: FETCH_COMMITS_FAILURE,
     payload: error
 });
 
-export const fetchCommitsStartAsync = (repo, branch) => {
+export const fetchCommitsStartAsync = (
+    repo: string,
+    branch: string
+):ThunkAction<void, AppState, null, Action<string>> => {
     return async (dispatch) => {
         dispatch(fetchCommitsStart());
 
