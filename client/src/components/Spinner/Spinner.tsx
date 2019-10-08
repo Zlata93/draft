@@ -7,7 +7,7 @@ import './Spinner.scss';
 
 const Section = compose(withSectionIndentHXxl, withSectionIndentVM)(SectionPresenter);
 
-const Spinner = () => {
+const Spinner: React.FC<{}> = () => {
     return (
         <Section indentH='xxl' indentV='m'>
             Loading...
