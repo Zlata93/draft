@@ -15,3 +15,4 @@ const rootReducer = combineReducers({
 });
 
 export const store = createStore(rootReducer, applyMiddleware(thunk));
+export type AppState = ReturnType<typeof rootReducer>;

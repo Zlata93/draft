@@ -1,8 +1,0 @@
-const reposTypes = {
-    FETCH_REPOS_START: 'FETCH_REPOS_START',
-    FETCH_REPOS_SUCCESS: 'FETCH_REPOS_SUCCESS',
-    FETCH_REPOS_FAILURE: 'FETCH_REPOS_FAILURE',
-    SET_REPO: 'SET_REPO'
-};
-
-export default reposTypes;
