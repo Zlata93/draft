@@ -1,10 +1,14 @@
-import React from 'react';
+import React, { ReactNode, FC } from 'react';
 import { cn } from '@bem-react/classname';
 import './Layout.scss';
 
 export const cnLayout = cn('Layout');
 
-const Layout = ({ children }) => {
+export interface LayoutProps {
+    children?: ReactNode | string;
+}
+
+const Layout: FC<LayoutProps> = ({ children }) => {
     return (
         <div className={cnLayout()}>
             {children}
