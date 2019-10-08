@@ -1,20 +1,25 @@
-import fileTypes from './file.types';
+import { FETCH_FILE_START, FETCH_FILE_SUCCESS, FETCH_FILE_FAILURE, FileActionTypes } from './file.types';
+import {ThunkAction} from "redux-thunk";
+import {AppState} from "../index";
+import {Action} from "redux";
 
-export const fetchFileStart = () => ({
-    type: fileTypes.FETCH_FILE_START,
+export const fetchFileStart = ():FileActionTypes => ({
+    type: FETCH_FILE_START,
 });
 
-export const fetchFileSuccess = (file) => ({
-    type: fileTypes.FETCH_FILE_SUCCESS,
+export const fetchFileSuccess = (file: string):FileActionTypes => ({
+    type: FETCH_FILE_SUCCESS,
     payload: file
 });
 
-export const fetchFileFailure = (error) => ({
-    type: fileTypes.FETCH_FILE_FAILURE,
+export const fetchFileFailure = (error: string):FileActionTypes => ({
+    type: FETCH_FILE_FAILURE,
     payload: error
 });
 
-export const fetchFileStartAsync = (url) => {
+export const fetchFileStartAsync = (
+    url: string
+):ThunkAction<void, AppState, null, Action<string>> => {
     return async (dispatch) => {
         dispatch(fetchFileStart());
 

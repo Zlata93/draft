@@ -17,7 +17,7 @@ const initialState: BranchState = {
 const branchReducer = (
     state = initialState,
     action: BranchesActionTypes
-    ) => {
+) => {
     switch (action.type) {
         case FETCH_BRANCHES_START:
             return { ...state, isFetching: true };
