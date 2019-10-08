@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { compose } from '@bem-react/core';
 import { cn } from '@bem-react/classname';
 import './Footer.scss';
@@ -10,7 +10,7 @@ export const cnFooter = cn('Footer');
 
 const Link = compose(withLinkColorDefault)(LinkPresenter);
 
-const Footer = () => {
+const Footer: FC<{}> = () => {
     return (
         <footer className={cnFooter()}>
             <div className={cnFooter('Item')}>

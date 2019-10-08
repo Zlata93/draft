@@ -9,6 +9,7 @@ export interface LinkProps {
     className?: string;
     target?: string;
     href: string;
+    color?: string;
 }
 
 const Link: FC<LinkProps> = ({ className, children, target, href }) => {
