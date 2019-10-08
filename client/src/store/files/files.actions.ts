@@ -1,20 +1,25 @@
-import filesTypes from './files.types';
+import { FETCH_FILES_START, FETCH_FILES_SUCCESS, FETCH_FILES_FAILURE, FilesActionTypes, File } from './files.types';
+import {ThunkAction} from "redux-thunk";
+import {AppState} from "../index";
+import {Action} from "redux";
 
-export const fetchFilesStart = () => ({
-    type: filesTypes.FETCH_FILES_START,
+export const fetchFilesStart = ():FilesActionTypes => ({
+    type: FETCH_FILES_START,
 });
 
-export const fetchFilesSuccess = (files) => ({
-    type: filesTypes.FETCH_FILES_SUCCESS,
+export const fetchFilesSuccess = (files: File[]):FilesActionTypes => ({
+    type: FETCH_FILES_SUCCESS,
     payload: files
 });
 
-export const fetchFilesFailure = (error) => ({
-    type: filesTypes.FETCH_FILES_FAILURE,
+export const fetchFilesFailure = (error: string):FilesActionTypes => ({
+    type: FETCH_FILES_FAILURE,
     payload: error
 });
 
-export const fetchFilesStartAsync = (url) => {
+export const fetchFilesStartAsync = (
+    url: string
+):ThunkAction<void, AppState, null, Action<string>> => {
     return async (dispatch) => {
 
         const paramsArr = url.split('/');
@@ -25,14 +30,14 @@ export const fetchFilesStartAsync = (url) => {
             if (!path) {
                 dispatch(fetchFilesStart());
                 dispatch(fetchFilesSuccess([
-                    { name: 'src', id: 1, type: 'dir'},
-                    { name: 'README.md', id: 2, type: 'file'}
+                    { name: 'src', id: '1', type: 'dir'},
+                    { name: 'README.md', id: '1', type: 'file'}
                 ]));
                 return;
             }
             dispatch(fetchFilesStart());
             dispatch(fetchFilesSuccess([
-                { name: 'test.js', id: 1, type: 'file' }
+                { name: 'test.js', id: '1', type: 'file' }
             ]));
             return;
         }
