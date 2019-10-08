@@ -1,13 +1,13 @@
 import { FETCH_REPOS_START, FETCH_REPOS_SUCCESS, FETCH_REPOS_FAILURE, SET_REPO, ReposActionTypes } from './repos.types';
 
-export interface reposState {
+export interface ReposState {
     repo: string
     repos: string[]
     isFetching: boolean,
     error: null | string
 }
 
-const initialState: reposState = {
+const initialState: ReposState = {
     repo: '',
     repos: ['test_repo'],
     isFetching: false,
