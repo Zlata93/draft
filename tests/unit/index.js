@@ -47,7 +47,7 @@ describe('Получение списка коммитов', function () {
         }
     };
 
-    it('возвращает объект с массивом коммитов', async () => {
+    it('преобразовывает строку в объект с массивом коммитов', async () => {
         child.stdout.on = onData;
         getCommits(child, cb);
         expect(commits).to.deep.equal({
@@ -74,7 +74,7 @@ describe('Получение списка коммитов', function () {
 });
 
 describe('Получение списка веток', function () {
-    it('возвращает объект с массивом объектов с именами и id веток', async () => {
+    it('преобразовывает строку в объект с массивом объектов с именами и id веток', async () => {
         let err = null;
         let branches = [];
         const cb = (error, result) => {
@@ -126,7 +126,7 @@ describe('Получение объекта со строкой', function () {
         }
     };
 
-    it('возвращает объект с полем output', async () => {
+    it('преобразовывает строку в объект с полем output', async () => {
         getString(child, cb);
         expect(diff).to.have.property('output');
     });
@@ -138,7 +138,7 @@ describe('Получение объекта со строкой', function () {
 });
 
 describe('Получение объекта с массивом файлов', function () {
-    it('возвращает объект с массивом объектов с полями name, type, id', async () => {
+    it('преобразовывает строку в объект с массивом объектов с полями name, type, id', async () => {
         let err = null;
         let files = '';
         const cb = (error, result) => {
