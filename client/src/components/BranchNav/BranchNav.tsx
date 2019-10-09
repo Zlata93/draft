@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { FC } from 'react';
+import { AppState } from "../../store";
 import { useSelector } from 'react-redux';
 import { cn } from '@bem-react/classname';
 import { compose } from '@bem-react/core';
@@ -14,10 +15,15 @@ const cnBranchNav = cn('BranchNav');
 const Link = compose(withLinkColorDefault)(LinkPresenter);
 const Select = compose(withSelectSizeL)(SelectPresenter);
 
-const BranchNav = ({ onSelect, lastCommit }) => {
-    const branches = useSelector(state => state.branch).branches.map(branch => branch.name);
-    const branch = useSelector(state => state.branch).branch;
-    const repo = useSelector(state => state.repos).repo;
+export interface BranchNavProps {
+    onSelect: () => {};
+    lastCommit?: string
+}
+
+const BranchNav: FC<BranchNavProps> = ({ onSelect, lastCommit }) => {
+    const branches = useSelector((state: AppState) => state.branch).branches.map(branch => branch.name);
+    const branch = useSelector((state: AppState) => state.branch).branch;
+    const repo = useSelector((state: AppState) => state.repos).repo;
     let commitHash, date, time, committer = '';
 
     if (lastCommit) {

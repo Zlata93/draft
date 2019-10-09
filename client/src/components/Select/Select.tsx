@@ -13,15 +13,16 @@ export const cnSelect = cn('Select');
 const Arrow = compose(composeU(withArrowStateUp, withArrowStateDown))(ArrowPresenter);
 
 type PathParamsType = {
-    repo: string,
+    repo: string;
 }
 
 export interface SelectProps extends RouteComponentProps<PathParamsType> {
     className?: string;
     activeOption: string;
     options: string[];
-    name: string;
-    type: string;
+    name?: string;
+    type?: string;
+    size?: string;
     onSelect: (name: string) => {}
 }
 
