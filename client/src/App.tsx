@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import './themes.scss';
 import './App.scss';
 
@@ -8,7 +8,7 @@ import Footer from './components/Footer/Footer';
 import Main from './components/Main/Main';
 import HomePage from './pages/HomePage/HomePage';
 
-function App() {
+const App: FC<{}> = () => {
   return (
     <div className="theme_space_default theme_size_default theme_color_project-default theme_gap_small theme_font_default">
         <Layout>
@@ -20,6 +20,6 @@ function App() {
         </Layout>
     </div>
   );
-}
+};
 
 export default App;
