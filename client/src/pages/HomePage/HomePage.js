@@ -75,7 +75,7 @@ const HomePage = ({ location }) => {
                     <Route
                         path={`${path}/:file`}
                         render={(props) =>
-                            <Repo {...props} activeTab={1} />}
+                            <Repo {...props} activeTab={1} onTabClick={onTabClick} onSelectBranch={onSelectBranch} />}
                     />
                 </Switch>
             </div>
