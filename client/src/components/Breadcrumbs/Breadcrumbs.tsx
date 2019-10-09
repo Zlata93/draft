@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { Route } from 'react-router-dom';
 import { cn } from '@bem-react/classname';
 import BreadcrumbsItem from './-Item/Breadcrumbs-Item';
@@ -6,7 +6,7 @@ import './Breadcrumbs.scss';
 
 export const cnBreadcrumbs = cn('Breadcrumbs');
 
-const Breadcrumbs = () => <Route path="*" render={({ location }) => {
+const Breadcrumbs: FC<{}> = () => <Route path="*" render={({ location }) => {
     let crumbs = location.pathname.split("/");
     crumbs = crumbs.filter(part => part);
     if (!crumbs.includes('root')) {
