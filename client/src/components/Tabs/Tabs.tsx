@@ -1,10 +1,21 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { cn } from '@bem-react/classname';
 import './Tabs.scss';
 
 const cnTabs = cn('Tabs');
 
-const Tabs = ({ tabs, activeTab, handleClick }) => {
+export interface Tab {
+    id: number,
+    name: string
+}
+
+export interface TabsProps {
+    tabs: Tab[],
+    activeTab: number,
+    handleClick: (id: number) => {}
+}
+
+const Tabs: FC<TabsProps> = ({ tabs, activeTab, handleClick }) => {
     return (
         <div className={cnTabs()}>
             {
