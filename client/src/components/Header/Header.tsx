@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { FC } from 'react';
+import { AppState } from "../../store";
 import { compose } from '@bem-react/core';
 import { useDispatch, useSelector } from 'react-redux';
 import { cn } from '@bem-react/classname';
@@ -15,13 +16,13 @@ export const cnHeader = cn('Header');
 
 const Select = compose(withSelectSizeS)(SelectPresenter);
 
-const Header = () => {
+const Header: FC<{}> = () => {
     const dispatch = useDispatch();
-    const repo = useSelector(state => state.repos).repo;
-    const branch = useSelector(state => state.branch).branch;
-    const options = useSelector(state => state.repos).repos;
+    const repo = useSelector((state: AppState) => state.repos).repo;
+    const branch = useSelector((state: AppState) => state.branch).branch;
+    const options = useSelector((state: AppState) => state.repos).repos;
 
-    const onSelect = (repo) => {
+    const onSelect = (repo: string) => {
         dispatch(setRepo(repo));
         dispatch(setBranch('master'));
         dispatch(fetchCommitsStartAsync(repo, branch));

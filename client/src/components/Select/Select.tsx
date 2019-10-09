@@ -23,8 +23,9 @@ export interface SelectProps extends RouteComponentProps<PathParamsType> {
     name?: string;
     type?: string;
     size?: string;
-    onSelect: (name: string) => {}
+    onSelect: (name: string) => void;
 }
+
 
 const Select: FC<SelectProps> = ({ className, activeOption, options = [], name, type, onSelect, match }) => {
     const [isOpen, setIsOpen] = useState(false);
