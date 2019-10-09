@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, FC } from 'react';
 import { compose } from '@bem-react/core';
 import { useDispatch } from 'react-redux';
 import { setRepo } from '../../store/repos/repos.actions';
@@ -7,7 +7,7 @@ import SectionPresenter from '../Section/Section';
 
 const Section = compose(withSectionIndentHXxl)(SectionPresenter);
 
-const Repos = () => {
+const Repos: FC<{}> = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
