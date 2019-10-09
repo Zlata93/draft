@@ -5,9 +5,10 @@ import './IconPlus.scss';
 export const cnIconPlus = cn('IconPlus');
 
 export interface IconPlusProps {
+    type: string;
+    weight?: string;
     children?: ReactNode | string;
     className?: string;
-    type: string;
 }
 
 const IconPlus: FC<IconPlusProps> = ({ type, className, children }) => {

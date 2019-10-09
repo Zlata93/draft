@@ -1,5 +1,5 @@
-import React from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import React, { FC } from 'react';
+import { Link, withRouter, RouteComponentProps } from 'react-router-dom';
 import { cn } from '@bem-react/classname';
 import { compose } from '@bem-react/core';
 import getPathFromLocation from '../../utils/getPathFromLocation';
@@ -20,7 +20,29 @@ const MyLink = compose(withLinkColorDefault)(LinkPresenter);
 const Arrow = compose(withArrowStateRight, withArrowColorFaded, withArrowSizeL)(ArrowPresenter);
 const IconPlus = compose(withIconPlusWeightBold)(IconPlusPresenter);
 
-const Table = ({ tableData: { head, body }, className, iconType, tableType, location }) => {
+export interface TableBodyItem {
+    id: string;
+    name: string;
+    type: string;
+    commit?: string;
+    message?: string;
+    updated?: string;
+    committer?: string;
+}
+
+export interface TableData {
+    head: string[];
+    body: TableBodyItem[];
+}
+
+export interface TableProps extends RouteComponentProps {
+    tableData: TableData;
+    tableType: string;
+    iconType: string;
+    className?: string;
+}
+
+const Table: FC<TableProps> = ({ tableData: { head, body }, className, iconType, tableType, location }) => {
 
     return (
         <table className={cnTable({}, [className])}>
