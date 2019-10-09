@@ -1,5 +1,7 @@
-import React, { useEffect, lazy, Suspense } from 'react';
+import React, { useEffect, lazy, Suspense, FC } from 'react';
 import { compose } from '@bem-react/core';
+import { AppState } from "../../store";
+import { RouteComponentProps } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
 import Tabs from '../Tabs/Tabs';
@@ -32,13 +34,24 @@ const tabs = [
 
 const Section = compose(withSectionIndentHXxl)(SectionPresenter);
 
-const Repo = ({activeTab, onTabClick, onSelectBranch, match, location }) => {
-    const lastCommit = useSelector(state => state.commits).commits[0];
-    const branches = useSelector(state => state.branch).branches;
-    const branch = useSelector(state => state.branch).branch;
-    const repo = useSelector(state => state.repos).repo;
-    const files = useSelector(state => state.files).files;
-    const file = useSelector(state => state.file).file;
+type PathParamsType = {
+    repo: string;
+    branch: string;
+}
+
+export interface RepoProps extends RouteComponentProps<PathParamsType> {
+    activeTab: number;
+    onTabClick: (id: number) => void;
+    onSelectBranch: (name: string) => void;
+}
+
+const Repo: FC<RepoProps> = ({activeTab, onTabClick, onSelectBranch, match, location }) => {
+    const lastCommit = useSelector((state: AppState) => state.commits).commits[0];
+    const branches = useSelector((state: AppState) => state.branch).branches;
+    const branch = useSelector((state: AppState) => state.branch).branch;
+    const repo = useSelector((state: AppState) => state.repos).repo;
+    const files = useSelector((state: AppState) => state.files).files;
+    const file = useSelector((state: AppState) => state.file).file;
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -71,7 +84,7 @@ const Repo = ({activeTab, onTabClick, onSelectBranch, match, location }) => {
         return (
             <Suspense fallback={<Spinner/>}>
                 <FileContent
-                    branchName={branch}
+                    // branchName={branch}
                     onSelectBranch={onSelectBranch}
                     lastCommit={lastCommit}
                     activeTab={activeTab}

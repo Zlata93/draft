@@ -10,10 +10,11 @@ export interface Tab {
 }
 
 export interface TabsProps {
-    tabs: Tab[],
-    activeTab: number,
-    handleClick: (id: number) => {}
+    tabs: Tab[];
+    activeTab: number;
+    handleClick: (id: number) => void;
 }
+
 
 const Tabs: FC<TabsProps> = ({ tabs, activeTab, handleClick }) => {
     return (

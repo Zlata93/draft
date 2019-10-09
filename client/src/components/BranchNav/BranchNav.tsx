@@ -16,7 +16,7 @@ const Link = compose(withLinkColorDefault)(LinkPresenter);
 const Select = compose(withSelectSizeL)(SelectPresenter);
 
 export interface BranchNavProps {
-    onSelect: () => {};
+    onSelect: (name: string) => void;
     lastCommit?: string
 }
 

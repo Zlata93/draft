@@ -5,7 +5,7 @@ import './IconPlus.scss';
 export const cnIconPlus = cn('IconPlus');
 
 export interface IconPlusProps {
-    type: string;
+    type?: string;
     weight?: string;
     children?: ReactNode | string;
     className?: string;

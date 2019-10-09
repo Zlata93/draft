@@ -5,7 +5,8 @@ export const SET_BRANCH = 'SET_BRANCH';
 
 export interface Branch {
     name: string,
-    id: string
+    id: string,
+    type?: string;
 }
 
 export interface FetchBranchesStart {

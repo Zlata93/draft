@@ -28,8 +28,8 @@ const tabs2 = [
 ];
 
 export interface FileContentProps {
-    onSelectBranch: () => {};
-    onTabClick: () => {};
+    onSelectBranch: (name: string) => void;
+    onTabClick: (id: number) => void;
     activeTab: number;
     fileName: string;
     lastCommit?: string;

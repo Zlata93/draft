@@ -2,6 +2,7 @@ import React, { FC } from 'react';
 import { Link, withRouter, RouteComponentProps } from 'react-router-dom';
 import { cn } from '@bem-react/classname';
 import { compose } from '@bem-react/core';
+import { Branch } from "../../store/branch/branch.types";
 import getPathFromLocation from '../../utils/getPathFromLocation';
 import './Table.scss';
 
@@ -20,9 +21,7 @@ const MyLink = compose(withLinkColorDefault)(LinkPresenter);
 const Arrow = compose(withArrowStateRight, withArrowColorFaded, withArrowSizeL)(ArrowPresenter);
 const IconPlus = compose(withIconPlusWeightBold)(IconPlusPresenter);
 
-export interface TableBodyItem {
-    id: string;
-    name: string;
+export interface TableBodyItem extends Branch {
     type: string;
     commit?: string;
     message?: string;
@@ -32,7 +31,9 @@ export interface TableBodyItem {
 
 export interface TableData {
     head: string[];
-    body: TableBodyItem[];
+    body: Array<TableBodyItem | Branch>;
+    // body: TableBodyItem[] | Branch[] | [];
+    type: string;
 }
 
 export interface TableProps extends RouteComponentProps {
@@ -70,7 +71,8 @@ const Table: FC<TableProps> = ({ tableData: { head, body }, className, iconType,
                                 Not a git repository
                             </td>
                         </tr> :
-                        body.map(({ name, id, type, commit, message, committer, updated }) => {
+                        // body.map((item: Branch |TableBodyItem) => {
+                        body.map(({ name, id, type }) => {
                         let path = getPathFromLocation(location.pathname);
 
                         return (
@@ -91,32 +93,6 @@ const Table: FC<TableProps> = ({ tableData: { head, body }, className, iconType,
                                             {name}
                                         </IconPlus>
                                     </Link>
-                                </td>
-                                }
-                                { commit &&
-                                <td className={cnTable('Cell', { type: 'commit' })}>
-                                    <MyLink
-                                        color='default'
-                                        href="#"
-                                        className={cnTable('Link')}
-                                    >
-                                        {commit}
-                                    </MyLink>
-                                </td>
-                                }
-                                { message &&
-                                <td className={cnTable('Cell', { type: 'message' })}>
-                                    {message}
-                                </td>
-                                }
-                                { committer &&
-                                <td className={cnTable('Cell', { type: 'committer' })}>
-                                    <User>{committer}</User>
-                                </td>
-                                }
-                                { updated &&
-                                <td className={cnTable('Cell', { type: 'updated' })}>
-                                    {updated}
                                 </td>
                                 }
                                 <td className={cnTable('Cell', { type: 'arrow' })}>
