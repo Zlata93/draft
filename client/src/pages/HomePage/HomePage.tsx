@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { Route, Switch, withRouter } from 'react-router-dom';
+import React, { useState, useEffect, FC } from 'react';
+import { Route, Switch, withRouter, RouteComponentProps } from 'react-router-dom';
+import { AppState } from "../../store";
+import { RepoProps } from "../../components/Repo/Repo";
 import { useDispatch, useSelector } from 'react-redux';
 import { cn } from '@bem-react/classname';
 import { compose } from '@bem-react/core';
 import getPathFromLocation from '../../utils/getPathFromLocation';
-// import { createBrowserHistory } from 'history';
 import './HomePage.scss';
 
 import { fetchReposStartAsync } from '../../store/repos/repos.actions';
@@ -32,23 +33,21 @@ const tabs = [
     // }
 ];
 
-// const history = createBrowserHistory();
-
-const HomePage = ({ location }) => {
+const HomePage: FC<RouteComponentProps> = ({ location }) => {
     const [activeTab, setActiveTab] = useState(tabs[0].id);
     const dispatch = useDispatch();
-    const branch = useSelector(state => state.branch).branch;
-    const repo = useSelector(state => state.repos).repo;
+    const branch = useSelector((state: AppState) => state.branch).branch;
+    const repo = useSelector((state: AppState) => state.repos).repo;
 
     useEffect(() => {
         dispatch(fetchReposStartAsync());
     }, [dispatch]);
 
-    const onTabClick = (id) => {
+    const onTabClick = (id: number) => {
         setActiveTab(id);
     };
 
-    const onSelectBranch = (branch) => {
+    const onSelectBranch = (branch: string) => {
         dispatch(setBranch(branch));
         dispatch(fetchCommitsStartAsync(repo, branch))
     };
@@ -59,14 +58,14 @@ const HomePage = ({ location }) => {
         <div className={cnHomePage()}>
             <Section indentH='xxl' className={cnHomePage('Section')}>
                 <Subheader>
-                    <Breadcrumbs branchName={branch}/>
+                    <Breadcrumbs />
                 </Subheader>
             </Section>
             <div>
                 <Switch>
                     <Route
                         exact path="/"
-                        render={(props) => <Repos {...props} />}
+                        render={() => <Repos />}
                     />
                     <Route
                         path={`/:repo/:branch`}
@@ -75,7 +74,7 @@ const HomePage = ({ location }) => {
                     <Route
                         path={`${path}/:file`}
                         render={(props) =>
-                            <Repo {...props} activeTab={1} />}
+                            <Repo {...props} activeTab={1} onTabClick={onTabClick} onSelectBranch={onSelectBranch} />}
                     />
                 </Switch>
             </div>
