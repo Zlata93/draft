@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import React, { useState, FC } from 'react';
+import { Link, withRouter, RouteComponentProps } from 'react-router-dom';
 import { compose, composeU } from '@bem-react/core';
 import { cn } from '@bem-react/classname';
 import './Select.scss'
@@ -12,7 +12,20 @@ export const cnSelect = cn('Select');
 
 const Arrow = compose(composeU(withArrowStateUp, withArrowStateDown))(ArrowPresenter);
 
-const Select = ({ className, activeOption, options = [], name, type, onSelect, match }) => {
+type PathParamsType = {
+    repo: string,
+}
+
+export interface SelectProps extends RouteComponentProps<PathParamsType> {
+    className?: string;
+    activeOption: string;
+    options: string[];
+    name: string;
+    type: string;
+    onSelect: (name: string) => {}
+}
+
+const Select: FC<SelectProps> = ({ className, activeOption, options = [], name, type, onSelect, match }) => {
     const [isOpen, setIsOpen] = useState(false);
 
     const toggleOpen = () => {
@@ -20,8 +33,8 @@ const Select = ({ className, activeOption, options = [], name, type, onSelect, m
         setIsOpen(isOpen => !isOpen);
     };
 
-    const handleSelect = (repo) => {
-        onSelect(repo);
+    const handleSelect = (name: string) => {
+        onSelect(name);
         setIsOpen(false);
     };
 

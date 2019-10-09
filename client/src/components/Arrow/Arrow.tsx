@@ -6,6 +6,7 @@ export const cnArrow = cn('Arrow');
 
 export interface ArrowProps {
     className?: string;
+    state?: string;
 }
 
 const Arrow: React.FC<ArrowProps> = ({className}) => {
