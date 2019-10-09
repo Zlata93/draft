@@ -5,10 +5,6 @@ export interface Branch {
     name: string;
 }
 
-export interface Error {
-    error: string
-}
-
 interface Output {
     output: Branch[]
 }
