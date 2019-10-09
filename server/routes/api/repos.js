@@ -59,7 +59,6 @@ router.get('/:repositoryId/branches', (req, res) => {
         getBranches(child, (error, branches) => {
             if(error) {
                 res.send({ error });
-                return;
             } else {
                 res.send(branches);
             }
@@ -84,7 +83,6 @@ router.get('/:repositoryId/commits/:commitHash/diff', (req, res) => {
         getString(child, (error, diff) => {
             if(error) {
                 res.send({ error });
-                return;
             } else {
                 res.send(diff);
             }
@@ -111,7 +109,6 @@ router.get(['/:repositoryId/tree/:commitHash/:path([^/]*)', '/:repositoryId', '/
         getFilesTree(child, (error, files) => {
             if(error) {
                 res.send({ error });
-                return;
             } else {
                 res.send(files);
             }
@@ -137,7 +134,6 @@ router.get('/:repositoryId/blob/:commitHash/:pathToFile([^/]*)', (req, res) => {
         getString(child, (error, file) => {
             if(error) {
                 res.send({ error });
-                return;
             } else {
                 res.send(file);
             }

@@ -7,7 +7,6 @@ function getCommits(child, cb, page, limit) {
     });
     child.stderr.on('data', (data) => {
         error = data.toString();
-        cb(error);
     });
     child.stdout.on('end', () => {
         output = output.split('\n');
@@ -15,7 +14,7 @@ function getCommits(child, cb, page, limit) {
             const skip = (page - 1) * limit;
             output = output.slice(skip, skip+limit);
         }
-        cb(null, { output });
+        cb(error, { output });
     });
 }
 

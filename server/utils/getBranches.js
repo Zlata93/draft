@@ -7,7 +7,6 @@ function getBranches(child, cb) {
     });
     child.stderr.on('data', (data) => {
         error = data.toString();
-        cb(error);
     });
     child.stdout.on('end', () => {
         let branchOutput = [];
@@ -21,7 +20,7 @@ function getBranches(child, cb) {
             }
         });
         output = branchOutput;
-        cb(null, { output });
+        cb(error, { output });
     });
 }
 

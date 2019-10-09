@@ -7,10 +7,9 @@ function getString(child, cb) {
     });
     child.stderr.on('data', (data) => {
         error = data.toString();
-        cb(error);
     });
     child.stdout.on('end', () => {
-        cb(null, { output });
+        cb(error, { output });
     });
 }
 
