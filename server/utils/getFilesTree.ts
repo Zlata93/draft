@@ -5,19 +5,19 @@ interface File extends Branch {
     type: string;
 }
 
-interface Output {
-    output: File[]
+export interface FilesOutput {
+    output: File[] | string
 }
 
 function getFilesTree(
     child: ChildProcess,
-    cb: (error: string | null, output: Output | '') => void
+    cb: (error: string | null, output: FilesOutput) => void
 ) {
     let output = '';
     let error: null | string = null;
 
     if (child.stdout === null || child.stderr === null) {
-        return cb('something is wrong with child process', '');
+        return cb('something is wrong with child process', { output });
     }
 
     child.stdout.on('data', (data) => {

@@ -4,7 +4,7 @@ function getFilesTree(child, cb) {
     var output = '';
     var error = null;
     if (child.stdout === null || child.stderr === null) {
-        return cb('something is wrong with child process', '');
+        return cb('something is wrong with child process', { output: output });
     }
     child.stdout.on('data', function (data) {
         output += data.toString();

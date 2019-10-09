@@ -5,19 +5,19 @@ export interface Branch {
     name: string;
 }
 
-interface Output {
-    output: Branch[]
+export interface BranchesOutput {
+    output: Branch[] | string
 }
 
 function getBranches(
     child: ChildProcess,
-    cb: (error: string | null, output: Output | '') => void
+    cb: (error: string | null, output: BranchesOutput) => void
 ) {
     let output = '';
     let error: null | string = null;
 
     if (child.stdout === null || child.stderr === null) {
-        return cb('something is wrong with child process', '');
+        return cb('something is wrong with child process', { output });
     }
 
     child.stdout.on('data', (data) => {

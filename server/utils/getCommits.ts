@@ -1,12 +1,12 @@
 import { ChildProcess } from "child_process";
 
-interface Output {
-    output: string[]
+export interface CommitsOutput {
+    output: string[] | string
 }
 
 function getCommits(
     child: ChildProcess,
-    cb: (error: string | null, output: Output | '') => void,
+    cb: (error: string | null, output: CommitsOutput) => void,
     page: number | undefined,
     limit: number | undefined
 ) {
@@ -14,7 +14,7 @@ function getCommits(
     let error: null | string = null;
 
     if (child.stdout === null || child.stderr === null) {
-        return cb('something is wrong with child process', '');
+        return cb('something is wrong with child process', { output });
     }
 
     child.stdout.on('data', (data) => {
