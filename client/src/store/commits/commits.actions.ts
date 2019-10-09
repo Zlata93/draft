@@ -32,7 +32,7 @@ export const fetchCommitsStartAsync = (
         try {
             const response = await fetch(`http://localhost:5000/api/repos/${repo}/commits/${branch}`);
             const commits = await response.json();
-            if (commits.output) {
+            if (commits.output.length || !commits.error) {
                 dispatch(fetchCommitsSuccess(commits.output));
             } else {
                 dispatch(fetchCommitsFailure(commits.error));

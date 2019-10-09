@@ -46,7 +46,7 @@ export const fetchFilesStartAsync = (
         try {
             const response = await fetch(`http://localhost:5000/api/repos/${repo}/tree/${branch}/${path}`);
             const files = await response.json();
-            if (files.output) {
+            if (files.output.length || !files.error) {
                 dispatch(fetchFilesSuccess(files.output));
             } else {
                 dispatch(fetchFilesFailure(files.error));

@@ -1,13 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const { exec } = require('child_process');
+const { exec, spawn } = require('child_process');
 const getDirectories = require('../../utils/getDirectories');
 const getFilesTree = require('../../utils/getFilesTree');
 const getBranches = require('../../utils/getBranches');
 const getCommits = require('../../utils/getCommits');
 const getString = require('../../utils/getString');
 const pathToRepos = require('../../utils/pathToRepos');
-const { spawn } = require('child_process');
 
 // @route    GET api/repos
 // @desc     Возвращает массив репозиториев, которые имеются в папке
@@ -59,7 +58,6 @@ router.get('/:repositoryId/branches', (req, res) => {
         getBranches(child, (error, branches) => {
             if(error) {
                 res.send({ error });
-                return;
             } else {
                 res.send(branches);
             }
@@ -84,7 +82,6 @@ router.get('/:repositoryId/commits/:commitHash/diff', (req, res) => {
         getString(child, (error, diff) => {
             if(error) {
                 res.send({ error });
-                return;
             } else {
                 res.send(diff);
             }
@@ -111,7 +108,6 @@ router.get(['/:repositoryId/tree/:commitHash/:path([^/]*)', '/:repositoryId', '/
         getFilesTree(child, (error, files) => {
             if(error) {
                 res.send({ error });
-                return;
             } else {
                 res.send(files);
             }
@@ -137,7 +133,6 @@ router.get('/:repositoryId/blob/:commitHash/:pathToFile([^/]*)', (req, res) => {
         getString(child, (error, file) => {
             if(error) {
                 res.send({ error });
-                return;
             } else {
                 res.send(file);
             }
@@ -156,7 +151,7 @@ router.delete('/:repositoryId', (req, res) => {
         if (err) {
             exec(`cd ${pathToRepos} && rmdir /s /q ${repositoryId}`, (error, stdout, stderr) => {
                 if (error) {
-                    return res.send({ error });
+                    res.send({ error });
                 }
                 res.send({ msg: 'Successfully deleted!' });
             });
@@ -173,7 +168,7 @@ router.post('/:repositoryId', (req, res) => {
     const { url } = req.body;
     exec(`cd ${pathToRepos} && git clone ${url} ${repositoryId}`, (error, stdout, stderr) => {
         if (error) {
-            return res.send({ error });
+            res.send({ error });
         }
         res.send({ msg: 'Successfully added!' });
     });

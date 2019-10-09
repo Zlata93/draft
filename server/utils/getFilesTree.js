@@ -7,7 +7,6 @@ function getFilesTree(child, cb) {
     });
     child.stderr.on('data', (data) => {
         error = data.toString();
-        cb(error);
     });
     child.stdout.on('end', () => {
         let filesOutput = [];
@@ -21,7 +20,7 @@ function getFilesTree(child, cb) {
             filesOutput.push(obj);
         });
         output = filesOutput.sort((a, b) => a.type.length - b.type.length);
-        cb(null, { output });
+        cb(error, { output });
     });
 }
 

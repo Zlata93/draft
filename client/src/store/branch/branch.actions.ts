@@ -39,7 +39,7 @@ export const fetchBranchesStartAsync = (
         try {
             const response = await fetch(`http://localhost:5000/api/repos/${repo}/branches`);
             const branches = await response.json();
-            if (branches.output) {
+            if (branches.output.length || !branches.error) {
                 const branchArr = branches.output.filter((branch:string) => branch);
                 dispatch(fetchBranchesSuccess(branchArr));
             } else {

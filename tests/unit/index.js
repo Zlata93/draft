@@ -11,9 +11,7 @@ const child = {
         on: () => {}
     },
     stderr: {
-        on: (event, cb) => {
-            cb('error');
-        }
+        on: () => {}
     },
 };
 

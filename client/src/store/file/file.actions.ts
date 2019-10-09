@@ -39,7 +39,7 @@ export const fetchFileStartAsync = (
         try {
             const response = await fetch(`http://localhost:5000/api/repos/${repo}/blob/${branch}/${path}`);
             const file = await response.json();
-            if (file.output) {
+            if (file.output.length || !file.error) {
                 dispatch(fetchFileSuccess(file.output));
             } else {
                 dispatch(fetchFileFailure(file.error));
