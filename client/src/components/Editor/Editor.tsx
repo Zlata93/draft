@@ -7,13 +7,14 @@ import './Editor.scss';
 import IconPlus from '../IconPlus/IconPlus';
 
 export interface EditorProps {
-    className?: string;
-    headerColor: string;
-    headerIndentH: string;
-    headerIndentV: string;
     fileName: string;
-    code: string;
     isLoading: boolean;
+    className?: string;
+    headerColor?: string;
+    headerIndentH?: string;
+    headerIndentV?: string;
+    border?: string;
+    code?: string;
 }
 
 export const cnEditor = cn('Editor');

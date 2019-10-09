@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { useSelector } from 'react-redux';
 import { compose } from '@bem-react/core';
+import { AppState } from "../../store";
 
 import { withSectionIndentHXxl0 } from '../Section/_indent-h/Section_indent-h_xxl0';
 import { withEditorBorderFaded } from '../Editor/_border/Editor_border_faded';
@@ -26,8 +27,17 @@ const tabs2 = [
     // }
 ];
 
-const FileContent = ({ onSelectBranch, lastCommit, activeTab, onTabClick, fileName, file }) => {
-    const isLoading = useSelector(state => state.file).isFetching;
+export interface FileContentProps {
+    onSelectBranch: () => {};
+    onTabClick: () => {};
+    activeTab: number;
+    fileName: string;
+    lastCommit?: string;
+    file?: string;
+}
+
+const FileContent: FC<FileContentProps> = ({ onSelectBranch, lastCommit, activeTab, onTabClick, fileName, file }) => {
+    const isLoading = useSelector((state: AppState) => state.file).isFetching;
 
     return (
         <>
